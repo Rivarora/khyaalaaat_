@@ -41,7 +41,7 @@ const Register = () => {
   return (
     <div className={`relative min-h-screen flex items-center justify-center ${
       isLight
-        ? "bg-gradient-to-br from-rose-100 via-fuchsia-50 to-violet-100"
+        ? "bg-gradient-to-br from-rose-50 via-fuchsia-50 to-violet-100"
         : "bg-gradient-to-br from-[#05050f] via-[#140a2f] to-[#1e0c3d]"
     }`}>
       <GlowingParticles />

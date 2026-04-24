@@ -13,17 +13,19 @@ const Layout = ({ children }: Props) => {
   const isLight = theme === "light";
 
   return (
-    <div className={`relative flex min-h-screen transition-colors duration-500 ${
-      isLight
-        ? "bg-gradient-to-br from-rose-100 via-fuchsia-50 to-violet-100 text-gray-800"
-        : "bg-gradient-to-br from-black via-purple-950 to-gray-950 text-white"
-    }`}>
+    <div
+      className={`relative min-h-screen transition-colors duration-500 ${
+        isLight
+          ? "text-gray-800 bg-gradient-to-br from-rose-50 via-fuchsia-50 to-violet-100"
+          : "text-white bg-gradient-to-br from-[#090012] via-[#16052b] to-[#070014]"
+      }`}
+    >
       <GlowingParticles />
       <div className="relative z-10">
         <Sidebar />
       </div>
 
-      <div className="flex-1 flex flex-col relative z-10">
+      <div className="flex flex-col relative z-10">
         <Navbar />
 
         <main className="p-8 flex-1 overflow-y-auto">

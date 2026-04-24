@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { useTheme } from "../context/ThemeContext";
 
+const assetsBaseUrl = import.meta.env.VITE_ASSETS_BASE_URL || "http://localhost:3000";
+
 interface ProfileData {
   id: number;
   username: string;
@@ -76,6 +78,7 @@ const Profile = () => {
       toast.success("Profile updated ✨");
       setIsEditOpen(false);
       fetchProfile();
+      window.dispatchEvent(new Event("profile-updated"));
     } catch {
       toast.error("Update failed");
     }
@@ -85,7 +88,40 @@ const Profile = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen py-12 px-4">
+      <div className={`relative min-h-full py-12 px-4 transition-all duration-700 ${
+        isLight ? "bg-white/35 backdrop-blur-[1px]" : "bg-black/20"
+      }`}>
+        {isLight && (
+          <>
+            <motion.div
+              animate={{ scale: [1, 1.15, 1], x: [0, 20, 0], y: [0, -15, 0] }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-0 left-0 w-[500px] h-[500px] bg-pink-300/50 rounded-full blur-[80px] -z-10 pointer-events-none"
+            />
+            <motion.div
+              animate={{ scale: [1, 1.2, 1], x: [0, -25, 0], y: [0, 20, 0] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+              className="absolute top-20 right-0 w-[450px] h-[450px] bg-purple-300/50 rounded-full blur-[80px] -z-10 pointer-events-none"
+            />
+            <motion.div
+              animate={{ scale: [1, 1.1, 1], x: [0, 15, 0], y: [0, 25, 0] }}
+              transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-emerald-200/50 rounded-full blur-[80px] -z-10 pointer-events-none"
+            />
+            <motion.div
+              animate={{ scale: [1, 1.25, 1], x: [0, -10, 0], y: [0, -20, 0] }}
+              transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+              className="absolute bottom-10 right-1/4 w-[350px] h-[350px] bg-fuchsia-200/50 rounded-full blur-[80px] -z-10 pointer-events-none"
+            />
+          </>
+        )}
+
+        {!isLight && (
+          <>
+            <div className="absolute top-0 left-0 w-96 h-96 bg-purple-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
+          </>
+        )}
 
         {/* PROFILE HEADER */}
         <div className="flex flex-col items-center text-center">
@@ -95,7 +131,7 @@ const Profile = () => {
             <img
               src={
                 profile.profile_picture
-                  ? `http://localhost:3000${profile.profile_picture}`
+                  ? `${assetsBaseUrl}${profile.profile_picture}`
                   : "https://via.placeholder.com/150"
               }
               className="w-40 h-40 rounded-full object-cover"
@@ -116,7 +152,11 @@ const Profile = () => {
           {decoded?.id === profile.id && (
             <button
               onClick={() => setIsEditOpen(true)}
-              className="bg-purple-600 px-6 py-2 rounded-full hover:bg-purple-700"
+              className={`px-6 py-2 rounded-full text-white ${
+                isLight
+                  ? "bg-gradient-to-r from-fuchsia-500 to-pink-500 hover:from-fuchsia-600 hover:to-pink-600"
+                  : "bg-purple-600 hover:bg-purple-700"
+              }`}
             >
               Edit Profile
             </button>

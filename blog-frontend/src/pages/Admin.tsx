@@ -11,8 +11,8 @@ const Admin = () => {
     <Layout>
       <div className={`relative min-h-full py-10 px-8 overflow-hidden transition-all duration-700 ${
         isLight
-          ? "bg-gradient-to-br from-rose-200 via-fuchsia-100 to-purple-100"
-          : "bg-gradient-to-br from-black via-purple-900 to-pink-900"
+          ? "bg-white/35 backdrop-blur-[1px]"
+          : "bg-black/20"
       }`}>
 
         {/* Animated blobs — light mode */}

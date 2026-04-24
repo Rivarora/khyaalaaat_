@@ -140,8 +140,8 @@ const Dashboard = () => {
 
   // ── Theme classes ─────────────────────────────────────────────────────────
   const bgGradient = isLight
-    ? "bg-gradient-to-br from-rose-200 via-fuchsia-100 via-purple-100 to-emerald-100"
-    : "bg-gradient-to-br from-black via-purple-900 to-pink-900";
+    ? "bg-white/35 backdrop-blur-[1px]"
+    : "bg-black/20";
   const titleColor = isLight ? "text-purple-700 drop-shadow-sm" : "text-yellow-400";
   const subtitleColor = isLight ? "text-fuchsia-500" : "text-gray-400";
   const cardBg = isLight
@@ -168,6 +168,7 @@ const Dashboard = () => {
   const selectClass = isLight
     ? "bg-white border border-pink-200 text-gray-800"
     : "bg-gray-800 text-white border border-gray-700";
+
 
   return (
     <Layout>
@@ -333,11 +334,7 @@ const Dashboard = () => {
             <select
               value={genre}
               onChange={(e) => setGenre(e.target.value)}
-              className={`w-full p-3 mb-5 rounded-xl border appearance-none ${
-                isLight
-                  ? "bg-white border-pink-200 text-gray-800"
-                  : "bg-white/10 border-violet-300/25 text-white"
-              }`}
+              className={`w-full p-3 mb-5 rounded-xl border appearance-none ${selectClass}`}
             >
               {genres.filter((g) => g !== "All").map((g) => (
                 <option

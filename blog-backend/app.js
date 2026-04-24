@@ -14,7 +14,9 @@ app.use(morgan("dev"));
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: (process.env.CORS_ORIGINS || "http://localhost:5173,http://localhost:5174")
+      .split(",")
+      .map((url) => url.trim()),
     credentials: true,
   })
 );

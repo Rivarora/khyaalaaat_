@@ -62,7 +62,10 @@ export default function AdminReply() {
 
   return (
     <Layout>
-      <div className="max-w-4xl mx-auto space-y-4">
+      <div className={`relative min-h-full py-10 px-4 transition-all duration-700 ${
+        isLight ? "bg-white/35 backdrop-blur-[1px]" : "bg-black/20"
+      }`}>
+        <div className="max-w-4xl mx-auto space-y-4">
         <h1 className={`text-3xl font-bold ${isLight ? "text-fuchsia-700" : "text-yellow-300"}`}>Reply to Request</h1>
 
         {request && (
@@ -70,7 +73,6 @@ export default function AdminReply() {
             isLight ? "bg-white/70 border-pink-200 text-gray-800" : "bg-white/10 border-white/20 text-white"
           }`}>
             <h2 className="text-xl font-medium">{request.title}</h2>
-            <p>Mood: {request.mood}</p>
             <p>Theme: {request.theme}</p>
             <p>Status: {request.status}</p>
           </div>
@@ -99,6 +101,7 @@ export default function AdminReply() {
             Delete Reply
           </button>
         )}
+        </div>
       </div>
     </Layout>
   );

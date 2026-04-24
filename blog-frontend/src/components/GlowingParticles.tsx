@@ -3,8 +3,8 @@ import { useTheme } from "../context/ThemeContext";
 
 const GlowingParticles = () => {
   const { theme } = useTheme();
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const isLight = theme === "light";
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -14,18 +14,16 @@ const GlowingParticles = () => {
     if (!ctx) return;
 
     let animationFrame = 0;
-    const colors = isLight
-      ? ["#ec4899", "#a855f7", "#06b6d4", "#10b981", "#f97316"]
-      : ["#93c5fd", "#a78bfa", "#22d3ee", "#f472b6"];
+    const colors = ["#f472b6", "#a78bfa", "#818cf8", "#67e8f9", "#5eead4"];
 
     const getTheme = () => ({
-      pointCount: isLight ? 68 : 56,
-      maxDistance: isLight ? 145 : 130,
-      speed: isLight ? 0.45 : 0.4,
-      lineOpacity: isLight ? 0.22 : 0.18,
-      dotOpacity: isLight ? 0.6 : 0.48,
-      dotMin: 1,
-      dotMax: isLight ? 2.5 : 2.2,
+      pointCount: 42,
+      maxDistance: 210,
+      speed: isLight ? 0.52 : 0.26,
+      lineOpacity: 0.1,
+      dotOpacity: 0.9,
+      dotMin: 1.4,
+      dotMax: 2.6,
     });
 
     const settings = getTheme();
@@ -77,9 +75,9 @@ const GlowingParticles = () => {
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = isLight ? "#d946ef" : "#7c3aed";
+            ctx.strokeStyle = "#f5c7ec";
             ctx.globalAlpha = opacity;
-            ctx.lineWidth = 1;
+            ctx.lineWidth = 0.8;
             ctx.stroke();
           }
         }

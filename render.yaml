@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: khyaalaat-backend
+    runtime: node
+    rootDir: blog-backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: JWT_SECRET
+        sync: false
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: CORS_ORIGINS
+        value: https://khyaalaat-frontend.onrender.com
+
+  - type: web
+    name: khyaalaat-frontend
+    runtime: static
+    rootDir: blog-frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: VITE_API_BASE_URL
+        value: https://khyaalaat-backend.onrender.com/api
+      - key: VITE_ASSETS_BASE_URL
+        value: https://khyaalaat-backend.onrender.com
