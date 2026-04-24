@@ -14,7 +14,7 @@ app.use(morgan("dev"));
 
 app.use(
   cors({
-    origin: (process.env.CORS_ORIGINS || "http://localhost:5173,http://localhost:5174")
+    origin: (process.env.CORS_ORIGINS || "https://khyaalaaat-1.onrender.com")
       .split(",")
       .map((url) => url.trim()),
     credentials: true,
