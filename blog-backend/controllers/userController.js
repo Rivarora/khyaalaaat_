@@ -1,4 +1,7 @@
-const db = require("../config/db");
+const User = require("../models/User");
+const Bookmark = require("../models/Bookmark");
+const Post = require("../models/Post");
+const Follower = require("../models/Follower");
 const multer = require("multer");
 const path = require("path");
 
@@ -35,115 +38,98 @@ const upload = multer({
 /* =========================================
    GET FULL PROFILE
 ========================================= */
-function getProfile(req, res) {
-  const userId = req.params.id;
+async function getProfile(req, res, next) {
+  try {
+    const userId = req.params.id;
 
-  db.query(
-    `SELECT id, username, bio, profile_picture FROM users WHERE id = ?`,
-    [userId],
-    (err, userResult) => {
-      if (err) return res.status(500).json({ message: "Database error" });
-      if (userResult.length === 0)
-        return res.status(404).json({ message: "User not found" });
-
-      const user = userResult[0];
-
-      db.query(
-        `
-        SELECT p.id, p.title, p.content
-        FROM bookmarks b
-        JOIN posts p ON b.post_id = p.id
-        WHERE b.user_id = ?
-        ORDER BY p.id DESC
-        `,
-        [userId],
-        (err, bookmarkedPoems) => {
-          if (err) return res.status(500).json({ message: "Database error" });
-
-          res.json({
-            ...user,
-            bookmarked_poems: bookmarkedPoems,
-          });
-        }
-      );
+    const user = await User.findById(userId).select("username bio profile_picture");
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
-  );
+
+    const bookmarks = await Bookmark.find({ user_id: userId })
+      .populate({
+        path: "post_id",
+        select: "title content",
+      });
+
+    const bookmarkedPoems = bookmarks.map((b) => b.post_id);
+
+    res.json({
+      ...user.toObject(),
+      bookmarked_poems: bookmarkedPoems,
+    });
+  } catch (error) {
+    next(error);
+  }
 }
 
 /* =========================================
    UPDATE PROFILE
 ========================================= */
-function updateProfile(req, res) {
-  const userId = req.user.id;
-  const bio = req.body.bio || "";
+async function updateProfile(req, res, next) {
+  try {
+    const userId = req.user.id;
+    const bio = req.body.bio || "";
 
-  console.log("UPDATE PROFILE — userId:", userId);
-  console.log("UPDATE PROFILE — bio:", bio);
-  console.log("UPDATE PROFILE — file:", req.file);
+    console.log("UPDATE PROFILE — userId:", userId);
+    console.log("UPDATE PROFILE — bio:", bio);
+    console.log("UPDATE PROFILE — file:", req.file);
 
-  if (req.file) {
-    const profilePicture = `/uploads/${req.file.filename}`;
-    db.query(
-      "UPDATE users SET bio = ?, profile_picture = ? WHERE id = ?",
-      [bio, profilePicture, userId],
-      (err) => {
-        if (err) {
-          console.error("DB error:", err);
-          return res.status(500).json({ message: "Update failed" });
-        }
-        res.json({ success: true, message: "Profile updated ✨" });
-      }
-    );
-  } else {
-    db.query(
-      "UPDATE users SET bio = ? WHERE id = ?",
-      [bio, userId],
-      (err) => {
-        if (err) {
-          console.error("DB error:", err);
-          return res.status(500).json({ message: "Update failed" });
-        }
-        res.json({ success: true, message: "Profile updated ✨" });
-      }
-    );
+    if (req.file) {
+      const profilePicture = `/uploads/${req.file.filename}`;
+      await User.findByIdAndUpdate(userId, { bio, profile_picture: profilePicture });
+    } else {
+      await User.findByIdAndUpdate(userId, { bio });
+    }
+
+    res.json({ success: true, message: "Profile updated ✨" });
+  } catch (error) {
+    next(error);
   }
 }
 
 /* =========================================
    FOLLOW USER
 ========================================= */
-function followUser(req, res) {
-  const followerId = req.user.id;
-  const followingId = req.params.id;
+async function followUser(req, res, next) {
+  try {
+    const followerId = req.user.id;
+    const followingId = req.params.id;
 
-  if (followerId == followingId)
-    return res.status(400).json({ message: "Cannot follow yourself" });
-
-  db.query(
-    "INSERT INTO followers (follower_id, following_id) VALUES (?, ?)",
-    [followerId, followingId],
-    (err) => {
-      if (err) return res.status(500).json({ message: "Follow failed" });
-      res.json({ success: true });
+    if (followerId === followingId) {
+      return res.status(400).json({ message: "Cannot follow yourself" });
     }
-  );
+
+    const newFollower = new Follower({
+      follower_id: followerId,
+      following_id: followingId,
+    });
+
+    await newFollower.save();
+    res.json({ success: true });
+  } catch (error) {
+    next(error);
+  }
 }
 
 /* =========================================
    UNFOLLOW USER
 ========================================= */
-function unfollowUser(req, res) {
-  const followerId = req.user.id;
-  const followingId = req.params.id;
+async function unfollowUser(req, res, next) {
+  try {
+    const followerId = req.user.id;
+    const followingId = req.params.id;
 
-  db.query(
-    "DELETE FROM followers WHERE follower_id = ? AND following_id = ?",
-    [followerId, followingId],
-    (err) => {
-      if (err) return res.status(500).json({ message: "Unfollow failed" });
-      res.json({ success: true });
-    }
-  );
+    await Follower.deleteOne({
+      follower_id: followerId,
+      following_id: followingId,
+    });
+
+    res.json({ success: true });
+  } catch (error) {
+    next(error);
+  }
 }
 
 /* =========================================

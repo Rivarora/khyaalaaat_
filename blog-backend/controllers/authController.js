@@ -1,4 +1,4 @@
-const db = require("../config/db");
+const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -16,20 +16,29 @@ async function register(req, res, next) {
       });
     }
 
+    // Check if user already exists
+    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
+    if (existingUser) {
+      return res.status(400).json({
+        success: false,
+        message: "User already exists",
+      });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    db.query(
-      "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
-      [username, email, hashedPassword],
-      (err) => {
-        if (err) return next(new Error("Database error"));
+    const newUser = new User({
+      username,
+      email,
+      password: hashedPassword,
+    });
 
-        res.status(201).json({
-          success: true,
-          message: "User registered successfully",
-        });
-      }
-    );
+    await newUser.save();
+
+    res.status(201).json({
+      success: true,
+      message: "User registered successfully",
+    });
   } catch (error) {
     next(error);
   }
@@ -49,42 +58,35 @@ async function login(req, res, next) {
       });
     }
 
-    db.query(
-      "SELECT * FROM users WHERE email = ?",
-      [email],
-      async (err, results) => {
-        if (err) return next(new Error("Database error"));
+    const user = await User.findOne({ email });
 
-        if (results.length === 0) {
-          return res.status(404).json({
-            success: false,
-            message: "User not found",
-          });
-        }
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
 
-        const user = results[0];
-        const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.password);
 
-        if (!isMatch) {
-          return res.status(401).json({
-            success: false,
-            message: "Invalid credentials",
-          });
-        }
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid credentials",
+      });
+    }
 
-        const token = jwt.sign(
-          { id: user.id, email: user.email, role: user.role || "user" },
-          process.env.JWT_SECRET,
-          { expiresIn: "7d" }
-        );
-
-        res.status(200).json({
-          success: true,
-          message: "Login successful",
-          token,
-        });
-      }
+    const token = jwt.sign(
+      { id: user._id, email: user.email, role: user.role || "user" },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
     );
+
+    res.status(200).json({
+      success: true,
+      message: "Login successful",
+      token,
+    });
   } catch (error) {
     next(error);
   }

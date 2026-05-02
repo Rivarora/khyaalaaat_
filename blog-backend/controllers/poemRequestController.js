@@ -1,19 +1,20 @@
-const poemRequestModel = require("../models/poemRequestModel");
+const PoemRequest = require("../models/poemRequestModel");
 
-async function createRequest(req, res) {
+async function createRequest(req, res, next) {
   try {
-    const { title, mood, theme } = req.body;
+    const { mood, theme } = req.body;
 
-    if (!title || !theme) {
-      return res.status(400).json({ message: "title and theme are required" });
+    if (!mood || !theme) {
+      return res.status(400).json({ message: "mood and theme are required" });
     }
 
-    await poemRequestModel.createPoemRequest({
-      userId: req.user.id,
-      title: title.trim(),
-      mood: mood?.trim(),
+    const newRequest = new PoemRequest({
+      user_id: req.user.id,
+      mood: mood.trim(),
       theme: theme.trim(),
     });
+
+    await newRequest.save();
 
     return res.status(201).json({
       success: true,
@@ -21,44 +22,53 @@ async function createRequest(req, res) {
     });
   } catch (error) {
     console.error("CREATE POEM REQUEST ERROR:", error);
-    return res.status(500).json({ message: "Failed to create poem request" });
+    next(error);
   }
 }
 
-async function getMyRequests(req, res) {
+async function getMyRequests(req, res, next) {
   try {
-    const requests = await poemRequestModel.getRequestsByUser(req.user.id);
+    const requests = await PoemRequest.find({ user_id: req.user.id })
+      .populate("user_id", "username email")
+      .sort({ createdAt: -1 });
+
     return res.status(200).json({ success: true, requests });
   } catch (error) {
     console.error("GET MY REQUESTS ERROR:", error);
-    return res.status(500).json({ message: "Failed to fetch your poem requests" });
+    next(error);
   }
 }
 
-async function getAllRequests(req, res) {
+async function getAllRequests(req, res, next) {
   try {
-    const requests = await poemRequestModel.getAllRequests();
+    const requests = await PoemRequest.find()
+      .populate("user_id", "username email")
+      .sort({ createdAt: -1 });
+
     return res.status(200).json({ success: true, requests });
   } catch (error) {
     console.error("GET ALL REQUESTS ERROR:", error);
-    return res.status(500).json({ message: "Failed to fetch poem requests" });
+    next(error);
   }
 }
 
-async function getRequestById(req, res) {
+async function getRequestById(req, res, next) {
   try {
-    const request = await poemRequestModel.findById(req.params.id);
+    const request = await PoemRequest.findById(req.params.id)
+      .populate("user_id", "username email");
+
     if (!request) {
       return res.status(404).json({ message: "Poem request not found" });
     }
+
     return res.status(200).json({ success: true, request });
   } catch (error) {
     console.error("GET REQUEST BY ID ERROR:", error);
-    return res.status(500).json({ message: "Failed to fetch poem request" });
+    next(error);
   }
 }
 
-async function replyRequest(req, res) {
+async function replyRequest(req, res, next) {
   try {
     const { id } = req.params;
     const { replyText } = req.body;
@@ -67,14 +77,15 @@ async function replyRequest(req, res) {
       return res.status(400).json({ message: "replyText is required" });
     }
 
-    const request = await poemRequestModel.findById(id);
+    const request = await PoemRequest.findById(id);
     if (!request) {
       return res.status(404).json({ message: "Poem request not found" });
     }
 
-    await poemRequestModel.replyToRequest({
-      id,
-      replyText: replyText.trim(),
+    await PoemRequest.findByIdAndUpdate(id, {
+      reply_text: replyText.trim(),
+      status: "completed",
+      replied_at: new Date(),
     });
 
     return res.status(200).json({
@@ -83,50 +94,51 @@ async function replyRequest(req, res) {
     });
   } catch (error) {
     console.error("REPLY REQUEST ERROR:", error);
-    return res.status(500).json({ message: "Failed to reply to poem request" });
+    next(error);
   }
 }
 
-async function deleteMyRequest(req, res) {
+async function deleteMyRequest(req, res, next) {
   try {
     const { id } = req.params;
-    const request = await poemRequestModel.findById(id);
+    const request = await PoemRequest.findById(id);
+
     if (!request) {
       return res.status(404).json({ message: "Poem request not found" });
     }
-    if (Number(request.user_id) !== Number(req.user.id)) {
+
+    if (request.user_id.toString() !== req.user.id.toString()) {
       return res.status(403).json({ message: "Not allowed to delete this request" });
     }
 
-    const result = await poemRequestModel.deleteRequestByUser({
-      id,
-      userId: req.user.id,
-    });
-
-    if (!result.affectedRows) {
-      return res.status(404).json({ message: "Poem request not found" });
-    }
+    await PoemRequest.findByIdAndDelete(id);
 
     return res.status(200).json({ success: true, message: "Request deleted" });
   } catch (error) {
     console.error("DELETE MY REQUEST ERROR:", error);
-    return res.status(500).json({ message: "Failed to delete request" });
+    next(error);
   }
 }
 
-async function removeReply(req, res) {
+async function removeReply(req, res, next) {
   try {
     const { id } = req.params;
-    const request = await poemRequestModel.findById(id);
+    const request = await PoemRequest.findById(id);
+
     if (!request) {
       return res.status(404).json({ message: "Poem request not found" });
     }
 
-    await poemRequestModel.clearReply({ id });
+    await PoemRequest.findByIdAndUpdate(id, {
+      reply_text: null,
+      status: "pending",
+      replied_at: null,
+    });
+
     return res.status(200).json({ success: true, message: "Reply removed" });
   } catch (error) {
     console.error("REMOVE REPLY ERROR:", error);
-    return res.status(500).json({ message: "Failed to remove reply" });
+    next(error);
   }
 }
 

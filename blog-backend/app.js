@@ -3,7 +3,10 @@ const morgan = require("morgan");
 
 const express = require("express");
 
-require("./config/db.js");
+const connectDB = require("./config/db.js");
+
+// Connect to MongoDB
+connectDB();
 
 const app = express();
 const cors = require("cors");
