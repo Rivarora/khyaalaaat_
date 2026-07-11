@@ -207,7 +207,7 @@ const Dashboard = () => {
         {/* HEADER */}
         <div className="text-center mb-16 relative">
           <motion.h1 key={theme} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className={`text-5xl font-serif mb-4 ${titleColor}`}>
-            Khyaalaat
+            Khyaalaaat
           </motion.h1>
           <p className={`text-sm tracking-widest ${subtitleColor}`}>Thoughts rendered in verse and color.</p>
 
