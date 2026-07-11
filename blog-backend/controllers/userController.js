@@ -53,7 +53,9 @@ async function getProfile(req, res, next) {
         select: "title content",
       });
 
-    const bookmarkedPoems = bookmarks.map((b) => b.post_id);
+    const bookmarkedPoems = bookmarks
+      .map((b) => b.post_id)
+      .filter(Boolean);
 
     res.json({
       id: user._id,

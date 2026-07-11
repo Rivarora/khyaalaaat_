@@ -8,17 +8,19 @@ import { useTheme } from "../context/ThemeContext";
 
 const assetsBaseUrl = import.meta.env.VITE_ASSETS_BASE_URL || "http://localhost:3000";
 
+interface BookmarkedPoem {
+  id: number;
+  title: string;
+  content: string;
+}
+
 interface ProfileData {
   id: string;
   _id?: string;
   username: string;
   bio: string;
   profile_picture: string;
-  bookmarked_poems: {
-    id: number;
-    title: string;
-    content: string;
-  }[];
+  bookmarked_poems: Array<BookmarkedPoem | null>;
 }
 
 const Profile = () => {
@@ -85,6 +87,10 @@ const Profile = () => {
   };
 
   if (!profile) return <Layout>Loading...</Layout>;
+
+  const bookmarkedPoems = (profile.bookmarked_poems ?? []).filter(
+    (poem): poem is BookmarkedPoem => Boolean(poem?.id)
+  );
 
   return (
     <Layout>
@@ -169,13 +175,13 @@ const Profile = () => {
             🔖 Saved Poems
           </h2>
 
-          {profile.bookmarked_poems?.length === 0 ? (
+          {bookmarkedPoems.length === 0 ? (
             <p className={`text-center ${isLight ? "text-gray-600" : "text-gray-400"}`}>
               No saved poems yet.
             </p>
           ) : (
             <div className="grid md:grid-cols-2 gap-8">
-              {profile.bookmarked_poems.map((poem) => (
+              {bookmarkedPoems.map((poem) => (
                 <motion.div
                   key={poem.id}
                   initial={{ opacity: 0, y: 30 }}
