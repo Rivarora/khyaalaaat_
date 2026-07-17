@@ -9,7 +9,7 @@ import { useTheme } from "../context/ThemeContext";
 const assetsBaseUrl = import.meta.env.VITE_ASSETS_BASE_URL || "http://localhost:3000";
 
 interface BookmarkedPoem {
-  id: number;
+  id: string;
   title: string;
   content: string;
 }
@@ -49,7 +49,16 @@ const Profile = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      setProfile(res.data);
+      const normalizedProfile = {
+        ...res.data,
+        id: res.data.id?.toString() || res.data._id?.toString(),
+        bookmarked_poems: (res.data.bookmarked_poems || []).map((poem: any) => ({
+          ...poem,
+          id: poem.id?.toString() || poem._id?.toString(),
+        })),
+      };
+
+      setProfile(normalizedProfile);
       setBio(res.data.bio || "");
     } catch {
       toast.error("Failed to load profile");

@@ -1,8 +1,40 @@
+const jwt = require("jsonwebtoken");
 const Post = require("../models/Post");
 const Like = require("../models/Like");
 const Bookmark = require("../models/Bookmark");
 const Comment = require("../models/Comment");
 const User = require("../models/User");
+
+function getUserIdFromToken(req) {
+  const authHeader = req.headers.authorization;
+  if (!authHeader) return null;
+
+  const token = authHeader.split(" ")[1];
+  if (!token) return null;
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || "khyaalaaat-dev-secret");
+    return decoded.id || null;
+  } catch {
+    return null;
+  }
+}
+
+async function buildPostPayload(post, userId) {
+  const likesCount = await Like.countDocuments({ post_id: post._id });
+  const commentsCount = await Comment.countDocuments({ post_id: post._id });
+  const isBookmarked = userId
+    ? Boolean(await Bookmark.exists({ user_id: userId, post_id: post._id }))
+    : false;
+
+  return {
+    ...post.toObject(),
+    id: post._id.toString(),
+    likes_count: likesCount,
+    comments_count: commentsCount,
+    is_bookmarked: isBookmarked,
+  };
+}
 
 /* ================= CREATE POST ================= */
 
@@ -44,22 +76,13 @@ async function createPost(req, res, next) {
 
 async function getAllPosts(req, res, next) {
   try {
+    const userId = getUserIdFromToken(req);
     const posts = await Post.find()
       .populate("user_id", "username email profile_picture")
       .sort({ createdAt: -1 });
 
-    // Add likes and comments count
     const postsWithCounts = await Promise.all(
-      posts.map(async (post) => {
-        const likesCount = await Like.countDocuments({ post_id: post._id });
-        const commentsCount = await Comment.countDocuments({ post_id: post._id });
-        return {
-          ...post.toObject(),
-          id: post._id.toString(),
-          likes_count: likesCount,
-          comments_count: commentsCount,
-        };
-      })
+      posts.map((post) => buildPostPayload(post, userId))
     );
 
     res.json({
@@ -75,24 +98,15 @@ async function getAllPosts(req, res, next) {
 
 async function getPostsByGenre(req, res, next) {
   try {
+    const userId = getUserIdFromToken(req);
     const genre = req.params.genre;
 
     const posts = await Post.find({ genre })
       .populate("user_id", "username email profile_picture")
       .sort({ createdAt: -1 });
 
-    // Add likes and comments count
     const postsWithCounts = await Promise.all(
-      posts.map(async (post) => {
-        const likesCount = await Like.countDocuments({ post_id: post._id });
-        const commentsCount = await Comment.countDocuments({ post_id: post._id });
-        return {
-          ...post.toObject(),
-          id: post._id.toString(),
-          likes_count: likesCount,
-          comments_count: commentsCount,
-        };
-      })
+      posts.map((post) => buildPostPayload(post, userId))
     );
 
     res.json({
@@ -114,18 +128,8 @@ async function getMyPosts(req, res, next) {
       .populate("user_id", "username email profile_picture")
       .sort({ createdAt: -1 });
 
-    // Add likes and comments count
     const postsWithCounts = await Promise.all(
-      posts.map(async (post) => {
-        const likesCount = await Like.countDocuments({ post_id: post._id });
-        const commentsCount = await Comment.countDocuments({ post_id: post._id });
-        return {
-          ...post.toObject(),
-          id: post._id.toString(),
-          likes_count: likesCount,
-          comments_count: commentsCount,
-        };
-      })
+      posts.map((post) => buildPostPayload(post, userId))
     );
 
     res.json({

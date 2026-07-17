@@ -15,6 +15,7 @@ interface Post {
   genre: string;
   likes_count: number;
   comments_count: number;
+  isBookmarked?: boolean;
 }
 
 interface Comment {
@@ -56,6 +57,7 @@ const Dashboard = () => {
       const normalizedPosts = (res.data.posts || []).map((post: any) => ({
         ...post,
         id: post._id || post.id,
+        isBookmarked: Boolean(post.is_bookmarked),
       }));
       setPosts(normalizedPosts);
     } catch {
@@ -117,8 +119,9 @@ const Dashboard = () => {
     if (!id) return;
     try {
       setAnimatedBookmark(id);
-      await api.post(`/posts/${id}/bookmark`, {}, { headers: { Authorization: `Bearer ${token}` } });
-      fetchPosts();
+      const response = await api.post(`/posts/${id}/bookmark`, {}, { headers: { Authorization: `Bearer ${token}` } });
+      const isBookmarked = response.data.saved;
+      setPosts((prev) => prev.map((post: Post) => (post.id === id ? { ...post, isBookmarked } : post)));
       setTimeout(() => setAnimatedBookmark(null), 400);
     } catch { toast.error("Bookmark failed"); }
   };
@@ -276,8 +279,8 @@ const Dashboard = () => {
                 <motion.button onClick={() => handleLike(post.id)} animate={animatedLike === post.id ? { scale: [1, 1.6, 1] } : {}} transition={{ duration: 0.4 }} className="text-pink-400 hover:text-pink-500">
                   ❤️ {post.likes_count}
                 </motion.button>
-                <motion.button onClick={() => handleBookmark(post.id)} animate={animatedBookmark === post.id ? { scale: [1, 1.5, 1] } : {}} transition={{ duration: 0.3 }} className="text-yellow-500 hover:text-yellow-600">
-                  🔖
+                <motion.button onClick={() => handleBookmark(post.id)} animate={animatedBookmark === post.id ? { scale: [1, 1.5, 1] } : {}} transition={{ duration: 0.3 }} className={post.isBookmarked ? "text-yellow-600 hover:text-yellow-700" : "text-yellow-500 hover:text-yellow-600"}>
+                  {post.isBookmarked ? "🔖" : "📑"}
                 </motion.button>
                 <button onClick={() => fetchComments(post.id)} className="text-blue-400 hover:text-blue-500">
                   💬 {post.comments_count}

@@ -57,10 +57,21 @@ async function getProfile(req, res, next) {
       .map((b) => b.post_id)
       .filter(Boolean);
 
+    const normalizedBookmarks = bookmarkedPoems
+      .map((post) => {
+        if (!post) return null;
+        return {
+          ...post.toObject(),
+          id: post._id.toString(),
+        };
+      })
+      .filter(Boolean);
+
     res.json({
-      id: user._id,
+      id: user._id.toString(),
       ...user.toObject(),
-      bookmarked_poems: bookmarkedPoems,
+      _id: user._id,
+      bookmarked_poems: normalizedBookmarks,
     });
   } catch (error) {
     next(error);
