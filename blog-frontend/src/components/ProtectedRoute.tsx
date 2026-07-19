@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import type { ReactNode } from "react";
-import { getUserRole, isTokenValid } from "../utils/auth";
+import { useAuth } from "../context/AuthContext";
 
 
 interface Props {
@@ -9,11 +9,13 @@ interface Props {
 }
 
 const ProtectedRoute = ({ children, allowedRoles }: Props) => {
-  const role = getUserRole();
+  const { isAuthenticated, user } = useAuth();
 
-  if (!isTokenValid()) {
+  if (!isAuthenticated) {
     return <Navigate to="/" />;
   }
+
+  const role = user?.role || "user";
 
   if (allowedRoles && (!role || !allowedRoles.includes(role))) {
     return <Navigate to="/dashboard" />;

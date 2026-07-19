@@ -52,4 +52,19 @@ app.get("/", (req, res) => {
     res.send("Backend working 🔥");
 });
 
+// Serve frontend build (if present) and fallback to index.html for client-side routing
+const frontendDist = path.join(__dirname, "..", "blog-frontend", "dist");
+try {
+  const fs = require("fs");
+  if (fs.existsSync(frontendDist)) {
+    app.use(express.static(frontendDist));
+
+    app.get("/*", (req, res) => {
+      res.sendFile(path.join(frontendDist, "index.html"));
+    });
+  }
+} catch (e) {
+  // ignore if dist not present
+}
+
 module.exports = app;

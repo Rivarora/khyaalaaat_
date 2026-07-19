@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import api from "../services/api";
 import { getDecodedToken, getUserRole } from "../utils/auth";
+import { useAuth } from "../context/AuthContext";
 
 const assetsBaseUrl = import.meta.env.VITE_ASSETS_BASE_URL || "http://localhost:3000";
 
@@ -140,15 +141,7 @@ const Sidebar = () => {
               {isLight ? "☀️" : "🌙"}
             </button>
 
-            <button
-              onClick={() => {
-                localStorage.removeItem("token");
-                window.location.href = "/";
-              }}
-              className="bg-red-600 px-5 py-2 rounded-xl hover:bg-red-700 text-white"
-            >
-              Logout
-            </button>
+            <LogoutButton />
           </div>
         </div>
       </div>
@@ -157,3 +150,13 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+function LogoutButton() {
+  const { logout } = useAuth();
+
+  return (
+    <button onClick={logout} className="bg-red-600 px-5 py-2 rounded-xl hover:bg-red-700 text-white">
+      Logout
+    </button>
+  );
+}

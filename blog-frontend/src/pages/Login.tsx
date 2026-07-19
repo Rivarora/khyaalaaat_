@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 import { motion } from "framer-motion";
 import api from "../services/api";
 import GlowingParticles from "../components/GlowingParticles";
@@ -13,6 +14,7 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
 
   const navigate = useNavigate();
+  const auth = useAuth();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -42,7 +44,8 @@ const Login = () => {
         password,
       });
 
-      localStorage.setItem("token", res.data.token);
+      // Persist token and update auth context
+      auth.login(res.data.token);
       navigate("/dashboard");
     } catch (error) {
       alert("Invalid credentials");
