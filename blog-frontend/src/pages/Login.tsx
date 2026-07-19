@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import api from "../services/api";
 import GlowingParticles from "../components/GlowingParticles";
@@ -12,6 +13,25 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      // If token exists and is valid, redirect to dashboard
+      try {
+        const decoded = JSON.parse(atob(token.split(".")[1]));
+        if (!decoded || (decoded.exp && decoded.exp < Math.floor(Date.now() / 1000))) {
+          // expired — clear token
+          localStorage.removeItem("token");
+        } else {
+          navigate("/dashboard");
+        }
+      } catch {
+        // invalid token
+        localStorage.removeItem("token");
+      }
+    }
+  }, []);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

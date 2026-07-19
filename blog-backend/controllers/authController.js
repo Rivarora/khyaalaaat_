@@ -54,6 +54,33 @@ async function register(req, res, next) {
       message: "User registered successfully",
     });
   } catch (error) {
+    // Handle Mongo duplicate key errors (E11000) to avoid leaking DB internals to clients
+    const isDuplicateKeyError =
+      error && (error.code === 11000 || (error.message && error.message.indexOf("E11000") !== -1));
+
+    if (isDuplicateKeyError) {
+      console.error("Duplicate key error during registration:", error);
+
+      // Try to determine which field caused the duplicate (username or email)
+      let field = "username";
+      if (error.keyPattern && typeof error.keyPattern === "object") {
+        const keys = Object.keys(error.keyPattern);
+        if (keys.length) field = keys[0];
+      } else if (error.message) {
+        if (error.message.indexOf("email") !== -1) field = "email";
+        else if (error.message.indexOf("username") !== -1) field = "username";
+      }
+
+      const genericMessage =
+        field === "username"
+          ? "Username already exists. Please choose another username."
+          : field === "email"
+          ? "Email already exists. Please use another email."
+          : "User already exists. Please choose different credentials.";
+
+      return res.status(400).json({ success: false, message: genericMessage });
+    }
+
     next(error);
   }
 }

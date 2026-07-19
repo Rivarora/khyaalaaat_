@@ -1,9 +1,14 @@
 function errorHandler(err, req, res, next) {
-    console.error(err.stack);
+    console.error(err && err.stack ? err.stack : err);
 
-    res.status(err.status || 500).json({
+    const status = err.status || 500;
+
+    // For server errors, do not leak internal messages to clients
+    const message = status >= 500 ? "Internal Server Error" : (err.message || "Bad Request");
+
+    res.status(status).json({
         success: false,
-        message: err.message || "Internal Server Error"
+        message,
     });
 }
 

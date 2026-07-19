@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import api from "../services/api";
 import GlowingParticles from "../components/GlowingParticles";
@@ -13,6 +14,22 @@ const Register = () => {
   const [password, setPassword] = useState<string>("");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decoded = JSON.parse(atob(token.split(".")[1]));
+        if (!decoded || (decoded.exp && decoded.exp < Math.floor(Date.now() / 1000))) {
+          localStorage.removeItem("token");
+        } else {
+          navigate("/dashboard");
+        }
+      } catch {
+        localStorage.removeItem("token");
+      }
+    }
+  }, []);
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

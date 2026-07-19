@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import type { ReactNode } from "react";
-import { getUserRole } from "../utils/auth";
+import { getUserRole, isTokenValid } from "../utils/auth";
 
 
 interface Props {
@@ -9,10 +9,9 @@ interface Props {
 }
 
 const ProtectedRoute = ({ children, allowedRoles }: Props) => {
-  const token = localStorage.getItem("token");
   const role = getUserRole();
 
-  if (!token) {
+  if (!isTokenValid()) {
     return <Navigate to="/" />;
   }
 
