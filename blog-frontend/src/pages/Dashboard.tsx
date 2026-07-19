@@ -185,7 +185,7 @@ const Dashboard = () => {
 
   return (
     <Layout>
-      <div className={`relative min-h-full py-10 px-4 overflow-hidden transition-all duration-700 ${bgGradient}`}>
+      <div className={`relative min-h-full py-6 sm:py-10 px-3 sm:px-4 overflow-hidden transition-all duration-700 ${bgGradient}`}>
 
         <GlowingParticles />
 
@@ -208,24 +208,25 @@ const Dashboard = () => {
         )}
 
         {/* HEADER */}
-        <div className="text-center mb-16 relative">
-          <motion.h1 key={theme} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className={`text-5xl font-serif mb-4 ${titleColor}`}>
-            Khyaalaaat
-          </motion.h1>
-          <p className={`text-sm tracking-widest ${subtitleColor}`}>Thoughts rendered in verse and color.</p>
-
+        <div className="text-center mb-10 sm:mb-16 relative">
+          {/* Profile button: stacks above the title on mobile, floats top-right from sm: up so it never overlaps the heading */}
           {decoded && (
-            <div className="absolute top-0 right-0">
+            <div className="flex justify-center mb-4 sm:mb-0 sm:absolute sm:top-0 sm:right-0 sm:justify-end">
               <Link to={`/profile/${decoded.id}`} className={`px-5 py-2 rounded-full text-sm transition-all duration-300 ${profileBtn}`}>
                 👤 Profile
               </Link>
             </div>
           )}
 
+          <motion.h1 key={theme} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className={`text-3xl sm:text-4xl md:text-5xl font-serif mb-4 ${titleColor}`}>
+            Khyaalaaat
+          </motion.h1>
+          <p className={`text-xs sm:text-sm tracking-widest ${subtitleColor}`}>Thoughts rendered in verse and color.</p>
+
           {decoded?.role === "admin" && (
             <button
               onClick={() => { setEditId(null); setTitle(""); setContent(""); setGenre("Other"); setIsOpen(true); }}
-              className={`mt-8 px-8 py-3 rounded-full shadow-lg transition-all duration-300 ${publishBtn}`}
+              className={`mt-6 sm:mt-8 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base rounded-full shadow-lg transition-all duration-300 ${publishBtn}`}
             >
               + Publish New Poem
             </button>
@@ -233,12 +234,12 @@ const Dashboard = () => {
         </div>
 
         {/* GENRE FILTER */}
-        <div className="flex flex-wrap justify-center gap-4 mb-6">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-6 px-2">
           {genres.map((g) => (
             <button
               key={g}
               onClick={() => setActiveGenre(g)}
-              className={`px-5 py-2 rounded-xl text-sm transition-all duration-300 ${activeGenre === g ? genreActive : genreInactive}`}
+              className={`px-4 sm:px-5 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm transition-all duration-300 ${activeGenre === g ? genreActive : genreInactive}`}
             >
               {g}
             </button>
@@ -246,21 +247,21 @@ const Dashboard = () => {
         </div>
 
         {/* RESULTS COUNT */}
-        <p className={`text-center text-xs mb-10 ${isLight ? "text-fuchsia-400" : "text-gray-500"}`}>
+        <p className={`text-center text-xs mb-8 sm:mb-10 px-4 ${isLight ? "text-fuchsia-400" : "text-gray-500"}`}>
           {filteredPosts.length === 0
             ? `No poems in "${activeGenre}" yet`
             : `${filteredPosts.length} poem${filteredPosts.length !== 1 ? "s" : ""}${activeGenre !== "All" ? ` in "${activeGenre}"` : ""}`}
         </p>
 
         {/* POSTS GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 max-w-7xl mx-auto px-1 sm:px-6">
           {filteredPosts.map((post, index) => (
             <motion.div
               key={post.id}
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.08 }}
-              className={`p-8 rounded-3xl border hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between min-h-[420px] relative ${cardBg}`}
+              className={`p-5 sm:p-8 rounded-3xl border hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between min-h-[340px] sm:min-h-[420px] relative ${cardBg}`}
             >
               {isLight && <div className="absolute top-4 right-6 text-xl opacity-30 select-none pointer-events-none">🌸</div>}
 
@@ -272,10 +273,10 @@ const Dashboard = () => {
                 </span>
               )}
 
-              <h2 className={`text-2xl font-serif mb-6 ${cardTitle}`}>{post.title}</h2>
-              <p className={`whitespace-pre-line leading-8 text-base flex-grow ${cardText}`}>{post.content}</p>
+              <h2 className={`text-xl sm:text-2xl font-serif mb-4 sm:mb-6 ${cardTitle}`}>{post.title}</h2>
+              <p className={`whitespace-pre-line leading-7 sm:leading-8 text-sm sm:text-base flex-grow ${cardText}`}>{post.content}</p>
 
-              <div className="flex justify-center gap-10 mt-6 text-sm">
+              <div className="flex flex-wrap justify-center gap-5 sm:gap-10 mt-6 text-sm">
                 <motion.button onClick={() => handleLike(post.id)} animate={animatedLike === post.id ? { scale: [1, 1.6, 1] } : {}} transition={{ duration: 0.4 }} className="text-pink-400 hover:text-pink-500">
                   ❤️ {post.likes_count}
                 </motion.button>
@@ -288,25 +289,25 @@ const Dashboard = () => {
               </div>
 
               {decoded?.role === "admin" && (
-                <button onClick={() => handleDelete(post.id)} className="text-red-400 hover:text-red-500 mt-4">Delete</button>
+                <button onClick={() => handleDelete(post.id)} className="text-red-400 hover:text-red-500 mt-4 text-center">Delete</button>
               )}
 
               {comments[post.id] && (
-                <div className={`p-4 rounded-xl mt-6 text-sm ${commentBg}`}>
+                <div className={`p-3 sm:p-4 rounded-xl mt-6 text-sm ${commentBg}`}>
                   {comments[post.id].map((c) => (
                     <div key={c.id} className="mb-1">
                       <strong className={isLight ? "text-fuchsia-600" : "text-purple-300"}>{c.username}</strong>{" "}
                       <span className={cardText}>— {c.content}</span>
                     </div>
                   ))}
-                  <div className="flex gap-2 mt-3">
+                  <div className="flex flex-col sm:flex-row gap-2 mt-3">
                     <input
                       value={commentDrafts[post.id] || ""}
                       onChange={(e) => setCommentDrafts((prev) => ({ ...prev, [post.id]: e.target.value }))}
                       className={`flex-1 p-2 rounded ${commentInput}`}
                       placeholder="Leave a thought..."
                     />
-                    <button onClick={() => handleComment(post.id)} className={`px-3 rounded text-white ${isLight ? "bg-fuchsia-500 hover:bg-fuchsia-600" : "bg-purple-600 hover:bg-purple-700"}`}>Send</button>
+                    <button onClick={() => handleComment(post.id)} className={`px-3 py-2 sm:py-0 rounded text-white whitespace-nowrap ${isLight ? "bg-fuchsia-500 hover:bg-fuchsia-600" : "bg-purple-600 hover:bg-purple-700"}`}>Send</button>
                   </div>
                 </div>
               )}
@@ -319,20 +320,20 @@ const Dashboard = () => {
       {/* MODAL */}
       {isOpen && (
         <div
-          className={`fixed inset-0 flex items-center justify-center z-50 ${
+          className={`fixed inset-0 flex items-center justify-center z-50 p-4 ${
             isLight ? "bg-white/40 backdrop-blur-sm" : "bg-black/75 backdrop-blur-sm"
           }`}
         >
           <motion.div
             initial={{ scale: 0.7, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className={`p-10 rounded-3xl w-full max-w-lg shadow-2xl border ${
+            className={`p-5 sm:p-10 rounded-3xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl border ${
               isLight
                 ? "bg-gradient-to-br from-rose-50 via-fuchsia-50 to-violet-100 text-gray-800 border-pink-200"
                 : "bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#3b0764] text-purple-100 border-violet-400/30"
             }`}
           >
-            <h3 className={`text-2xl mb-8 font-serif ${isLight ? "text-purple-700" : "text-purple-200"}`}>
+            <h3 className={`text-xl sm:text-2xl mb-6 sm:mb-8 font-serif ${isLight ? "text-purple-700" : "text-purple-200"}`}>
               {editId ? "Edit Poem" : "Publish Poem"}
             </h3>
 
@@ -372,14 +373,14 @@ const Dashboard = () => {
               placeholder="Write your poem..."
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className={`w-full p-3 mb-8 rounded-xl h-48 border ${
+              className={`w-full p-3 mb-8 rounded-xl h-40 sm:h-48 border ${
                 isLight
                   ? "bg-white border-pink-200 text-gray-800 placeholder-pink-300"
                   : "bg-white/10 border-violet-300/25 text-white placeholder-purple-300"
               }`}
             />
 
-            <div className="flex justify-end gap-4">
+            <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4">
               <button
                 onClick={() => setIsOpen(false)}
                 className={`px-5 py-2 rounded-xl ${

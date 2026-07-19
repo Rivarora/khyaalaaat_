@@ -28,7 +28,7 @@ const Layout = ({ children }: Props) => {
       <div className="flex flex-col relative z-10">
         <Navbar />
 
-        <main className="p-8 flex-1 overflow-y-auto">
+        <main className="p-4 sm:p-6 md:p-8 flex-1 overflow-y-auto">
           {children}
         </main>
       </div>
