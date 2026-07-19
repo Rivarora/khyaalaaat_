@@ -5,6 +5,7 @@ type AuthState = {
   token: string | null;
   user: any | null;
   isAuthenticated: boolean;
+  isLoading: boolean;
   login: (token: string) => void;
   logout: () => void;
 };
@@ -14,6 +15,7 @@ const AuthContext = createContext<AuthState | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<any | null>(null);
+  const [isLoading, setIsLoading] = useState(true); // ← KEY FIX
 
   useEffect(() => {
     const t = localStorage.getItem("token");
@@ -25,6 +27,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setToken(null);
       setUser(null);
     }
+    setIsLoading(false); // ← done reading localStorage
   }, []);
 
   const login = (newToken: string) => {
@@ -37,13 +40,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     localStorage.removeItem("token");
     setToken(null);
     setUser(null);
-    // force full reload to reset client state/navigation if needed
-    window.location.href = "/";
+    // ✅ HashRouter-compatible redirect
+    window.location.hash = "/";
   };
 
   return (
     <AuthContext.Provider
-      value={{ token, user, isAuthenticated: !!token, login, logout }}
+      value={{ token, user, isAuthenticated: !!token, isLoading, login, logout }}
     >
       {children}
     </AuthContext.Provider>
