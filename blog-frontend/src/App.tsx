@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
 import ProtectedRoute from "./components/ProtectedRoute";
+import GuestRoute from "./components/GuestRoute";
 import Admin from "./pages/Admin";
 import Profile from "./pages/Profile";
 import RequestPoem from "./pages/RequestPoem";
@@ -10,16 +11,46 @@ import MyRequests from "./pages/MyRequests";
 import AdminRequests from "./pages/AdminRequests";
 import AdminReply from "./pages/AdminReply";
 
-
-
 function App() {
   return (
     <HashRouter>
       <Routes>
 
-        {/* Public Routes */}
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        {/* Guest-only routes — logged-in users get redirected away */}
+        <Route
+          path="/"
+          element={
+            <GuestRoute>
+              <Login />
+            </GuestRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <GuestRoute>
+              <Register />
+            </GuestRoute>
+          }
+        />
+
+        {/* Protected Routes */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile/:id"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/request-poem"
           element={
@@ -36,6 +67,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* Admin only */}
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <Admin />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/admin-requests"
           element={
@@ -49,33 +90,6 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={["admin"]}>
               <AdminReply />
-            </ProtectedRoute>
-          }
-        />
-        {/* Protected Routes */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute allowedRoles={["admin"]}>
-              <Admin />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/profile/:id"
-          element={
-            <ProtectedRoute>
-              <Profile />
             </ProtectedRoute>
           }
         />
