@@ -38,22 +38,22 @@ const Sidebar = () => {
   }, [decoded?.id]);
 
   return (
-    <div className={`px-4 sm:px-6 py-3 sm:py-4 shadow-lg border-b transition-all duration-500 ${
+    <div className={`px-6 py-4 shadow-lg border-b transition-all duration-500 ${
       isLight
         ? "bg-white/70 backdrop-blur-md border-pink-200"
         : "backdrop-blur-xl bg-white/5 border-white/10"
     }`}>
-      <div className="flex flex-col gap-3 sm:gap-4 md:flex-row md:items-center">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center">
         <Link to={decoded?.id ? `/profile/${decoded.id}` : "/dashboard"} className="shrink-0">
           {profilePicture ? (
             <img
               src={`${assetsBaseUrl}${profilePicture}`}
               alt="Profile logo"
-              className="h-10 w-10 sm:h-12 sm:w-12 rounded-full border border-yellow-500/70 object-cover shadow-md"
+              className="h-12 w-12 rounded-full border border-yellow-500/70 object-cover shadow-md"
             />
           ) : (
             <div
-              className={`h-10 w-10 sm:h-12 sm:w-12 rounded-full border border-yellow-500/70 shadow-md flex items-center justify-center font-semibold ${
+              className={`h-12 w-12 rounded-full border border-yellow-500/70 shadow-md flex items-center justify-center font-semibold ${
                 isLight ? "bg-pink-100 text-fuchsia-700" : "bg-gray-800 text-yellow-400"
               }`}
               title="Profile"
@@ -63,11 +63,11 @@ const Sidebar = () => {
           )}
         </Link>
 
-        <div className="flex flex-1 flex-wrap items-center gap-3 md:justify-end">
+        <div className="flex flex-1 flex-wrap items-center gap-3 lg:justify-end">
           <nav className="flex flex-wrap gap-2 md:gap-3">
         <Link
           to="/dashboard"
-          className={`block px-3 sm:px-4 py-2 rounded-xl text-sm sm:text-base transition-all duration-300 ${
+          className={`block px-4 py-2 rounded-xl transition-all duration-300 ${
             isLight
               ? "text-fuchsia-700 hover:bg-pink-200/60 hover:text-purple-800"
               : "text-gray-300 hover:bg-white/10"
@@ -80,7 +80,7 @@ const Sidebar = () => {
           <>
             <Link
               to="/request-poem"
-              className={`block px-3 sm:px-4 py-2 rounded-xl text-sm sm:text-base transition-all duration-300 ${
+              className={`block px-4 py-2 rounded-xl transition-all duration-300 ${
                 isLight
                   ? "text-fuchsia-700 hover:bg-pink-200/60 hover:text-purple-800"
                   : "text-gray-300 hover:bg-white/10"
@@ -91,7 +91,7 @@ const Sidebar = () => {
 
             <Link
               to="/my-requests"
-              className={`block px-3 sm:px-4 py-2 rounded-xl text-sm sm:text-base transition-all duration-300 ${
+              className={`block px-4 py-2 rounded-xl transition-all duration-300 ${
                 isLight
                   ? "text-fuchsia-700 hover:bg-pink-200/60 hover:text-purple-800"
                   : "text-gray-300 hover:bg-white/10"
@@ -106,7 +106,7 @@ const Sidebar = () => {
           <>
             <Link
               to="/admin"
-              className={`block px-3 sm:px-4 py-2 rounded-xl text-sm sm:text-base transition-all duration-300 ${
+              className={`block px-4 py-2 rounded-xl transition-all duration-300 ${
                 isLight
                   ? "text-fuchsia-700 hover:bg-pink-200/60 hover:text-purple-800"
                   : "text-gray-300 hover:bg-white/10"
@@ -116,7 +116,7 @@ const Sidebar = () => {
             </Link>
             <Link
               to="/admin-requests"
-              className={`block px-3 sm:px-4 py-2 rounded-xl text-sm sm:text-base transition-all duration-300 ${
+              className={`block px-4 py-2 rounded-xl transition-all duration-300 ${
                 isLight
                   ? "text-fuchsia-700 hover:bg-pink-200/60 hover:text-purple-800"
                   : "text-gray-300 hover:bg-white/10"
@@ -128,10 +128,10 @@ const Sidebar = () => {
         )}
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-3 ml-auto md:ml-0">
+          <div className="flex items-center gap-3">
             <button
               onClick={toggleTheme}
-              className={`px-3 sm:px-4 py-2 rounded-xl border transition-colors duration-300 ${
+              className={`px-4 py-2 rounded-xl border transition-colors duration-300 ${
                 isLight
                   ? "border-pink-300 bg-pink-100 hover:bg-pink-200 text-pink-700"
                   : "border-gray-700 hover:bg-gray-800 text-yellow-400"
@@ -155,7 +155,7 @@ function LogoutButton() {
   const { logout } = useAuth();
 
   return (
-    <button onClick={logout} className="bg-red-600 px-4 sm:px-5 py-2 rounded-xl hover:bg-red-700 text-white text-sm sm:text-base">
+    <button onClick={logout} className="bg-red-600 px-5 py-2 rounded-xl hover:bg-red-700 text-white">
       Logout
     </button>
   );
