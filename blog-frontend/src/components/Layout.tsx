@@ -27,8 +27,23 @@ const Layout = ({ children }: Props) => {
         <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
         <div className="flex min-h-screen min-w-0 flex-1 flex-col">
+          {!isSidebarOpen && (
+            <button
+              type="button"
+              onClick={() => setIsSidebarOpen(true)}
+              className={`fixed left-4 top-4 z-40 md:hidden rounded-lg border px-3 py-2 shadow-sm ${
+                isLight
+                  ? "bg-white/90 border-pink-200 text-fuchsia-700"
+                  : "bg-black/70 border-white/20 text-yellow-300"
+              }`}
+              aria-label="Toggle menu"
+            >
+              ☰
+            </button>
+          )}
+
           <div className="sticky top-0 z-20 md:hidden">
-            <Navbar onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)} />
+            <Navbar onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)} showMenuButton={false} />
           </div>
 
           <main className="px-4 py-4 md:px-8 md:py-8 flex-1 min-w-0 overflow-x-hidden">
