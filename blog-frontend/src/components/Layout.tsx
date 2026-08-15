@@ -21,10 +21,10 @@ const Layout = ({ children }: Props) => {
     >
       <GlowingParticles />
 
-      <div className="relative z-10">
+      <div className="relative z-10 md:flex md:min-h-screen">
         <Sidebar />
 
-        <main className="px-4 py-4 md:px-8 md:py-8 flex-1 min-w-0 overflow-y-auto">
+        <main className="px-4 py-4 md:px-8 md:py-8 flex-1 min-w-0 overflow-x-hidden">
           {children}
         </main>
       </div>

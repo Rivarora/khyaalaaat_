@@ -54,7 +54,7 @@ const Sidebar = ({ isOpen = false, onClose }: Props) => {
       )}
 
       <aside
-        className={`fixed top-0 left-0 bottom-0 z-30 transform transition-transform duration-300 md:relative md:translate-x-0 md:top-auto md:left-auto md:bottom-auto md:z-auto ${
+        className={`fixed top-0 left-0 bottom-0 z-30 transform transition-transform duration-300 md:sticky md:top-0 md:h-screen md:translate-x-0 md:z-auto md:flex-shrink-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } w-[85vw] max-w-[320px] md:w-72 sidebar-mobile px-4 md:px-6 py-3 md:py-4 shadow-lg md:shadow-none border-b md:border-b-0 md:border-r ${
           isLight
@@ -93,8 +93,8 @@ const Sidebar = ({ isOpen = false, onClose }: Props) => {
             </button>
           </div>
 
-          <div className="flex w-full flex-col gap-3 md:flex-row md:items-center md:justify-end md:gap-3">
-            <nav className="flex flex-col gap-2 md:flex-row md:gap-3 md:overflow-x-auto md:whitespace-nowrap nav-stack">
+          <div className="flex w-full flex-col gap-3">
+            <nav className="flex w-full flex-col gap-2 nav-stack">
               <Link
                 to="/dashboard"
                 className={`block px-4 py-2 rounded-xl transition-all duration-300 ${
