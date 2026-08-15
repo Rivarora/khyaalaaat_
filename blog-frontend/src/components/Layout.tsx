@@ -28,10 +28,10 @@ const Layout = ({ children }: Props) => {
       <div className="relative z-10 flex flex-col md:flex-row">
         <Sidebar isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-        <div className="flex-1 flex flex-col md:ml-72">
+        <div className="flex-1 flex flex-col min-w-0">
           <Navbar onToggleSidebar={() => setSidebarOpen((s) => !s)} />
 
-          <main className="p-4 md:p-8 flex-1 overflow-y-auto">
+          <main className="p-3 sm:p-4 md:p-8 flex-1 min-w-0 overflow-y-auto">
             {children}
           </main>
         </div>

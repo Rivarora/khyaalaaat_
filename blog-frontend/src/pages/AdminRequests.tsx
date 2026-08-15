@@ -91,24 +91,24 @@ export default function AdminRequests() {
 
         {isLight && (
           <>
-            <motion.div animate={{ scale: [1, 1.15, 1], x: [0, 20, 0], y: [0, -15, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} className="absolute top-0 left-0 w-[500px] h-[500px] bg-pink-300/50 rounded-full blur-[80px] -z-10 pointer-events-none" />
-            <motion.div animate={{ scale: [1, 1.2, 1], x: [0, -25, 0], y: [0, 20, 0] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-20 right-0 w-[450px] h-[450px] bg-purple-300/50 rounded-full blur-[80px] -z-10 pointer-events-none" />
-            <motion.div animate={{ scale: [1, 1.1, 1], x: [0, 15, 0], y: [0, 25, 0] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-emerald-200/50 rounded-full blur-[80px] -z-10 pointer-events-none" />
-            <motion.div animate={{ scale: [1, 1.25, 1], x: [0, -10, 0], y: [0, -20, 0] }} transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 3 }} className="absolute bottom-10 right-1/4 w-[350px] h-[350px] bg-fuchsia-200/50 rounded-full blur-[80px] -z-10 pointer-events-none" />
+            <motion.div animate={{ scale: [1, 1.15, 1], x: [0, 20, 0], y: [0, -15, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} className="absolute top-0 left-0 w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px] bg-pink-300/50 rounded-full blur-[80px] -z-10 pointer-events-none" />
+            <motion.div animate={{ scale: [1, 1.2, 1], x: [0, -25, 0], y: [0, 20, 0] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-20 right-0 w-[220px] h-[220px] sm:w-[350px] sm:h-[350px] lg:w-[450px] lg:h-[450px] bg-purple-300/50 rounded-full blur-[80px] -z-10 pointer-events-none" />
+            <motion.div animate={{ scale: [1, 1.1, 1], x: [0, 15, 0], y: [0, 25, 0] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute bottom-0 left-1/4 w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] lg:w-[400px] lg:h-[400px] bg-emerald-200/50 rounded-full blur-[80px] -z-10 pointer-events-none" />
+            <motion.div animate={{ scale: [1, 1.25, 1], x: [0, -10, 0], y: [0, -20, 0] }} transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 3 }} className="absolute bottom-10 right-1/4 w-[180px] h-[180px] sm:w-[260px] sm:h-[260px] lg:w-[350px] lg:h-[350px] bg-fuchsia-200/50 rounded-full blur-[80px] -z-10 pointer-events-none" />
             {["top-10 left-20", "top-32 right-40", "bottom-20 left-32", "bottom-40 right-20", "top-1/2 left-10"].map((pos, i) => (
-              <motion.div key={i} animate={{ rotate: [0, 360], scale: [1, 1.2, 1] }} transition={{ duration: 12 + i * 2, repeat: Infinity, ease: "linear" }} className={`absolute ${pos} text-3xl opacity-30 pointer-events-none select-none -z-10`}>🌸</motion.div>
+              <motion.div key={i} animate={{ rotate: [0, 360], scale: [1, 1.2, 1] }} transition={{ duration: 12 + i * 2, repeat: Infinity, ease: "linear" }} className={`absolute ${pos} text-2xl sm:text-3xl opacity-30 pointer-events-none select-none -z-10`}>🌸</motion.div>
             ))}
           </>
         )}
         {!isLight && (
           <>
-            <div className="absolute top-0 left-0 w-96 h-96 bg-purple-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
+            <div className="absolute top-0 left-0 w-52 h-52 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-purple-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-52 h-52 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-pink-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
           </>
         )}
 
         <div className="max-w-5xl mx-auto space-y-4">
-        <h1 className={`text-4xl font-serif ${isLight ? "text-purple-700 drop-shadow-sm" : "text-yellow-400"}`}>All Poem Requests</h1>
+        <h1 className={`text-3xl sm:text-4xl font-serif ${isLight ? "text-purple-700 drop-shadow-sm" : "text-yellow-400"}`}>All Poem Requests</h1>
         {data.map((r) => (
           <div
             key={r.id}
@@ -156,34 +156,36 @@ export default function AdminRequests() {
                   : "bg-black/40 border-white/10 text-white"
               }`}
             />
-            <button
-              onClick={() => respond(r.id)}
-              className={`mt-2 px-4 py-2 rounded text-white ${
-                isLight
-                  ? "bg-gradient-to-r from-fuchsia-500 to-pink-500 hover:from-fuchsia-600 hover:to-pink-600"
-                  : "bg-gradient-to-r from-violet-600 via-fuchsia-600 to-pink-600 hover:from-violet-700 hover:via-fuchsia-700 hover:to-pink-700"
-              }`}
-            >
-              {r.status === "completed" ? "Update Reply" : "Send Reply"}
-            </button>
-            {r.reply_text && (
+            <div className="mt-3 flex flex-col sm:flex-row sm:flex-wrap gap-2">
               <button
-                onClick={() => removeReply(r.id)}
-                className="mt-2 ml-3 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                onClick={() => respond(r.id)}
+                className={`px-4 py-2 rounded text-white ${
+                  isLight
+                    ? "bg-gradient-to-r from-fuchsia-500 to-pink-500 hover:from-fuchsia-600 hover:to-pink-600"
+                    : "bg-gradient-to-r from-violet-600 via-fuchsia-600 to-pink-600 hover:from-violet-700 hover:via-fuchsia-700 hover:to-pink-700"
+                }`}
               >
-                Delete Reply
+                {r.status === "completed" ? "Update Reply" : "Send Reply"}
               </button>
-            )}
-            <Link
-              to={`/admin-requests/${r.id}/reply`}
-              className={`inline-block mt-2 ml-3 px-4 py-2 rounded ${
-                isLight
-                  ? "bg-purple-100 text-purple-700 hover:bg-purple-200"
-                  : "bg-indigo-600 text-white hover:bg-indigo-700"
-              }`}
-            >
-              Open Reply Page
-            </Link>
+              {r.reply_text && (
+                <button
+                  onClick={() => removeReply(r.id)}
+                  className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                >
+                  Delete Reply
+                </button>
+              )}
+              <Link
+                to={`/admin-requests/${r.id}/reply`}
+                className={`inline-flex items-center justify-center px-4 py-2 rounded ${
+                  isLight
+                    ? "bg-purple-100 text-purple-700 hover:bg-purple-200"
+                    : "bg-indigo-600 text-white hover:bg-indigo-700"
+                }`}
+              >
+                Open Reply Page
+              </Link>
+            </div>
           </div>
         ))}
         </div>

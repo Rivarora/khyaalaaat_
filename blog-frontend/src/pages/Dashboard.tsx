@@ -191,58 +191,62 @@ const Dashboard = () => {
 
         {isLight && (
           <>
-            <motion.div animate={{ scale: [1, 1.15, 1], x: [0, 20, 0], y: [0, -15, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} className="absolute top-0 left-0 w-[500px] h-[500px] bg-pink-300/50 rounded-full blur-[80px] -z-10 pointer-events-none" />
-            <motion.div animate={{ scale: [1, 1.2, 1], x: [0, -25, 0], y: [0, 20, 0] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-20 right-0 w-[450px] h-[450px] bg-purple-300/50 rounded-full blur-[80px] -z-10 pointer-events-none" />
-            <motion.div animate={{ scale: [1, 1.1, 1], x: [0, 15, 0], y: [0, 25, 0] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-emerald-200/50 rounded-full blur-[80px] -z-10 pointer-events-none" />
-            <motion.div animate={{ scale: [1, 1.25, 1], x: [0, -10, 0], y: [0, -20, 0] }} transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 3 }} className="absolute bottom-10 right-1/4 w-[350px] h-[350px] bg-fuchsia-200/50 rounded-full blur-[80px] -z-10 pointer-events-none" />
+            <motion.div animate={{ scale: [1, 1.15, 1], x: [0, 20, 0], y: [0, -15, 0] }} transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }} className="absolute top-0 left-0 w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px] bg-pink-300/50 rounded-full blur-[80px] -z-10 pointer-events-none" />
+            <motion.div animate={{ scale: [1, 1.2, 1], x: [0, -25, 0], y: [0, 20, 0] }} transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }} className="absolute top-20 right-0 w-[220px] h-[220px] sm:w-[350px] sm:h-[350px] lg:w-[450px] lg:h-[450px] bg-purple-300/50 rounded-full blur-[80px] -z-10 pointer-events-none" />
+            <motion.div animate={{ scale: [1, 1.1, 1], x: [0, 15, 0], y: [0, 25, 0] }} transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute bottom-0 left-1/4 w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] lg:w-[400px] lg:h-[400px] bg-emerald-200/50 rounded-full blur-[80px] -z-10 pointer-events-none" />
+            <motion.div animate={{ scale: [1, 1.25, 1], x: [0, -10, 0], y: [0, -20, 0] }} transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 3 }} className="absolute bottom-10 right-1/4 w-[180px] h-[180px] sm:w-[260px] sm:h-[260px] lg:w-[350px] lg:h-[350px] bg-fuchsia-200/50 rounded-full blur-[80px] -z-10 pointer-events-none" />
             {["top-10 left-20", "top-32 right-40", "bottom-20 left-32", "bottom-40 right-20", "top-1/2 left-10"].map((pos, i) => (
-              <motion.div key={i} animate={{ rotate: [0, 360], scale: [1, 1.2, 1] }} transition={{ duration: 12 + i * 2, repeat: Infinity, ease: "linear" }} className={`absolute ${pos} text-3xl opacity-30 pointer-events-none select-none -z-10`}>🌸</motion.div>
+              <motion.div key={i} animate={{ rotate: [0, 360], scale: [1, 1.2, 1] }} transition={{ duration: 12 + i * 2, repeat: Infinity, ease: "linear" }} className={`absolute ${pos} text-2xl sm:text-3xl opacity-30 pointer-events-none select-none -z-10`}>🌸</motion.div>
             ))}
           </>
         )}
         {!isLight && (
           <>
-            <div className="absolute top-0 left-0 w-96 h-96 bg-purple-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
+            <div className="absolute top-0 left-0 w-52 h-52 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-purple-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-52 h-52 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-pink-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
           </>
         )}
 
         {/* HEADER */}
-        <div className="text-center mb-16 relative">
-          <motion.h1 key={theme} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className={`text-5xl font-serif mb-4 ${titleColor}`}>
-            Khyaalaaat
-          </motion.h1>
-          <p className={`text-sm tracking-widest ${subtitleColor}`}>Thoughts rendered in verse and color.</p>
+        <div className="relative mb-10 sm:mb-16">
+          <div className="flex flex-col items-center justify-center gap-4 text-center">
+            <motion.h1 key={theme} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className={`text-3xl sm:text-4xl md:text-5xl font-serif ${titleColor}`}>
+              Khyaalaaat
+            </motion.h1>
+            <p className={`text-[11px] sm:text-xs md:text-sm tracking-widest ${subtitleColor}`}>
+              Thoughts rendered in verse and color.
+            </p>
 
-          {decoded && (
-            <div className="absolute top-0 right-0">
-              <Link to={`/profile/${decoded.id}`} className={`px-5 py-2 rounded-full text-sm transition-all duration-300 ${profileBtn}`}>
+            {decoded && (
+              <Link to={`/profile/${decoded.id}`} className={`px-4 sm:px-5 py-2 rounded-full text-sm transition-all duration-300 ${profileBtn}`}>
                 👤 Profile
               </Link>
-            </div>
-          )}
+            )}
 
-          {decoded?.role === "admin" && (
-            <button
-              onClick={() => { setEditId(null); setTitle(""); setContent(""); setGenre("Other"); setIsOpen(true); }}
-              className={`mt-8 px-8 py-3 rounded-full shadow-lg transition-all duration-300 ${publishBtn}`}
-            >
-              + Publish New Poem
-            </button>
-          )}
+            {decoded?.role === "admin" && (
+              <button
+                onClick={() => { setEditId(null); setTitle(""); setContent(""); setGenre("Other"); setIsOpen(true); }}
+                className={`px-6 sm:px-8 py-3 rounded-full shadow-lg transition-all duration-300 ${publishBtn}`}
+              >
+                + Publish New Poem
+              </button>
+            )}
+          </div>
         </div>
 
         {/* GENRE FILTER */}
-        <div className="flex flex-wrap justify-center gap-4 mb-6">
-          {genres.map((g) => (
-            <button
-              key={g}
-              onClick={() => setActiveGenre(g)}
-              className={`px-5 py-2 rounded-xl text-sm transition-all duration-300 ${activeGenre === g ? genreActive : genreInactive}`}
-            >
-              {g}
-            </button>
-          ))}
+        <div className="mb-6 overflow-x-auto pb-2">
+          <div className="flex gap-2 sm:gap-3 justify-start sm:justify-center min-w-max">
+            {genres.map((g) => (
+              <button
+                key={g}
+                onClick={() => setActiveGenre(g)}
+                className={`shrink-0 px-4 sm:px-5 py-2 rounded-xl text-sm transition-all duration-300 ${activeGenre === g ? genreActive : genreInactive}`}
+              >
+                {g}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* RESULTS COUNT */}
@@ -253,14 +257,14 @@ const Dashboard = () => {
         </p>
 
         {/* POSTS GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 max-w-7xl mx-auto px-0 sm:px-2">
           {filteredPosts.map((post, index) => (
             <motion.div
               key={post.id}
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.08 }}
-              className={`p-8 rounded-3xl border hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between min-h-[420px] relative ${cardBg}`}
+              className={`p-5 sm:p-6 lg:p-8 rounded-3xl border hover:scale-[1.02] transition-all duration-300 flex flex-col justify-between min-h-[360px] sm:min-h-[400px] lg:min-h-[420px] relative break-words ${cardBg}`}
             >
               {isLight && <div className="absolute top-4 right-6 text-xl opacity-30 select-none pointer-events-none">🌸</div>}
 
@@ -272,10 +276,10 @@ const Dashboard = () => {
                 </span>
               )}
 
-              <h2 className={`text-2xl font-serif mb-6 ${cardTitle}`}>{post.title}</h2>
-              <p className={`whitespace-pre-line leading-8 text-base flex-grow ${cardText}`}>{post.content}</p>
+              <h2 className={`text-xl sm:text-2xl font-serif mb-4 sm:mb-6 break-words ${cardTitle}`}>{post.title}</h2>
+              <p className={`whitespace-pre-line leading-7 sm:leading-8 text-sm sm:text-base flex-grow break-words ${cardText}`}>{post.content}</p>
 
-              <div className="flex justify-center gap-10 mt-6 text-sm">
+              <div className="flex justify-center gap-6 sm:gap-10 mt-6 text-sm">
                 <motion.button onClick={() => handleLike(post.id)} animate={animatedLike === post.id ? { scale: [1, 1.6, 1] } : {}} transition={{ duration: 0.4 }} className="text-pink-400 hover:text-pink-500">
                   ❤️ {post.likes_count}
                 </motion.button>
@@ -319,14 +323,14 @@ const Dashboard = () => {
       {/* MODAL */}
       {isOpen && (
         <div
-          className={`fixed inset-0 flex items-center justify-center z-50 ${
+          className={`fixed inset-0 flex items-center justify-center z-50 p-4 ${
             isLight ? "bg-white/40 backdrop-blur-sm" : "bg-black/75 backdrop-blur-sm"
           }`}
         >
           <motion.div
             initial={{ scale: 0.7, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className={`p-10 rounded-3xl w-full max-w-lg shadow-2xl border ${
+            className={`p-5 sm:p-8 rounded-3xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl border ${
               isLight
                 ? "bg-gradient-to-br from-rose-50 via-fuchsia-50 to-violet-100 text-gray-800 border-pink-200"
                 : "bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#3b0764] text-purple-100 border-violet-400/30"
@@ -341,7 +345,7 @@ const Dashboard = () => {
               placeholder="Title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className={`w-full p-3 mb-5 rounded-xl border ${
+              className={`w-full max-w-full p-3 mb-5 rounded-xl border ${
                 isLight
                   ? "bg-white border-pink-200 text-gray-800 placeholder-pink-300"
                   : "bg-white/10 border-violet-300/25 text-white placeholder-purple-300"
@@ -352,7 +356,7 @@ const Dashboard = () => {
             <select
               value={genre}
               onChange={(e) => setGenre(e.target.value)}
-              className={`w-full p-3 mb-5 rounded-xl border appearance-none ${selectClass}`}
+              className={`w-full max-w-full p-3 mb-5 rounded-xl border appearance-none ${selectClass}`}
             >
               {genres.filter((g) => g !== "All").map((g) => (
                 <option
@@ -372,17 +376,17 @@ const Dashboard = () => {
               placeholder="Write your poem..."
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className={`w-full p-3 mb-8 rounded-xl h-48 border ${
+              className={`w-full max-w-full p-3 mb-8 rounded-xl h-48 border ${
                 isLight
                   ? "bg-white border-pink-200 text-gray-800 placeholder-pink-300"
                   : "bg-white/10 border-violet-300/25 text-white placeholder-purple-300"
               }`}
             />
 
-            <div className="flex justify-end gap-4">
+            <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 sm:gap-4">
               <button
                 onClick={() => setIsOpen(false)}
-                className={`px-5 py-2 rounded-xl ${
+                className={`w-full sm:w-auto px-5 py-2 rounded-xl ${
                   isLight
                     ? "bg-pink-100 hover:bg-pink-200 text-gray-700"
                     : "bg-violet-900/60 hover:bg-violet-800/70 text-purple-100 border border-violet-400/20"
@@ -392,7 +396,7 @@ const Dashboard = () => {
               </button>
               <button
                 onClick={handleSubmit}
-                className={`px-6 py-2 rounded-xl text-white ${
+                className={`w-full sm:w-auto px-6 py-2 rounded-xl text-white ${
                   isLight
                     ? "bg-gradient-to-r from-fuchsia-500 to-pink-500 hover:from-fuchsia-600 hover:to-pink-600"
                     : "bg-gradient-to-r from-violet-600 via-fuchsia-600 to-pink-600 hover:from-violet-700 hover:via-fuchsia-700 hover:to-pink-700"

@@ -77,7 +77,7 @@ const Register = () => {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className={`auth-card relative z-10 overflow-hidden backdrop-blur-2xl p-9 rounded-[28px] shadow-2xl w-full max-w-[420px] mx-4 md:mx-0 ${
+        className={`auth-card relative z-10 overflow-hidden backdrop-blur-2xl p-5 sm:p-7 md:p-9 rounded-[28px] shadow-2xl w-full max-w-[420px] mx-4 md:mx-0 ${
           isLight
             ? "bg-white/75 border border-pink-200 text-gray-800 shadow-pink-200/70"
             : "bg-white/10 border border-violet-300/20 text-white shadow-fuchsia-900/30"
@@ -97,7 +97,7 @@ const Register = () => {
           <p className={`text-xs tracking-[0.25em] uppercase text-center mb-2 ${isLight ? "text-fuchsia-500" : "text-fuchsia-300"}`}>
             Join the Community
           </p>
-          <h2 className={`text-4xl font-bold mb-2 text-center ${isLight ? "text-fuchsia-700" : "text-white"}`}>
+          <h2 className={`text-3xl sm:text-4xl font-bold mb-2 text-center ${isLight ? "text-fuchsia-700" : "text-white"}`}>
             Create Account
           </h2>
           <p className={`text-sm text-center mb-7 ${isLight ? "text-gray-600" : "text-gray-300"}`}>

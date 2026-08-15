@@ -22,8 +22,13 @@ body,
   overflow-x: hidden;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 * {
@@ -37,10 +42,16 @@ svg {
 }
 
 button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
 input,
 select,
 textarea {
   font: inherit;
+  max-width: 100%;
 }
 
 @keyframes gradient {

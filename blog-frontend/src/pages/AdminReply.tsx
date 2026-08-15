@@ -97,20 +97,22 @@ export default function AdminReply() {
           }`}
         />
 
-        <button
-          onClick={onSubmit}
-          className="px-5 py-2 bg-purple-600 rounded hover:bg-purple-700"
-        >
-          Save Reply
-        </button>
-        {request?.reply_text && (
+        <div className="flex flex-col sm:flex-row gap-3">
           <button
-            onClick={onDeleteReply}
-            className="ml-3 px-5 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+            onClick={onSubmit}
+            className="px-5 py-2 bg-purple-600 rounded hover:bg-purple-700"
           >
-            Delete Reply
+            Save Reply
           </button>
-        )}
+          {request?.reply_text && (
+            <button
+              onClick={onDeleteReply}
+              className="px-5 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+            >
+              Delete Reply
+            </button>
+          )}
+        </div>
         </div>
       </div>
     </Layout>

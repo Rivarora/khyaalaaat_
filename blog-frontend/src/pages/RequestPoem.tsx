@@ -45,40 +45,40 @@ const RequestPoem = () => {
             <motion.div
               animate={{ scale: [1, 1.15, 1], x: [0, 20, 0], y: [0, -15, 0] }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-0 left-0 w-[500px] h-[500px] bg-pink-300/50 rounded-full blur-[80px] -z-10 pointer-events-none"
+              className="absolute top-0 left-0 w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px] bg-pink-300/50 rounded-full blur-[80px] -z-10 pointer-events-none"
             />
             <motion.div
               animate={{ scale: [1, 1.2, 1], x: [0, -25, 0], y: [0, 20, 0] }}
               transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-              className="absolute top-20 right-0 w-[450px] h-[450px] bg-purple-300/50 rounded-full blur-[80px] -z-10 pointer-events-none"
+              className="absolute top-20 right-0 w-[220px] h-[220px] sm:w-[350px] sm:h-[350px] lg:w-[450px] lg:h-[450px] bg-purple-300/50 rounded-full blur-[80px] -z-10 pointer-events-none"
             />
             <motion.div
               animate={{ scale: [1, 1.1, 1], x: [0, 15, 0], y: [0, 25, 0] }}
               transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute bottom-0 left-1/4 w-[400px] h-[400px] bg-emerald-200/50 rounded-full blur-[80px] -z-10 pointer-events-none"
+              className="absolute bottom-0 left-1/4 w-[200px] h-[200px] sm:w-[300px] sm:h-[300px] lg:w-[400px] lg:h-[400px] bg-emerald-200/50 rounded-full blur-[80px] -z-10 pointer-events-none"
             />
             <motion.div
               animate={{ scale: [1, 1.25, 1], x: [0, -10, 0], y: [0, -20, 0] }}
               transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-              className="absolute bottom-10 right-1/4 w-[350px] h-[350px] bg-fuchsia-200/50 rounded-full blur-[80px] -z-10 pointer-events-none"
+              className="absolute bottom-10 right-1/4 w-[180px] h-[180px] sm:w-[260px] sm:h-[260px] lg:w-[350px] lg:h-[350px] bg-fuchsia-200/50 rounded-full blur-[80px] -z-10 pointer-events-none"
             />
           </>
         )}
 
         {!isLight && (
           <>
-            <div className="absolute top-0 left-0 w-96 h-96 bg-purple-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
+            <div className="absolute top-0 left-0 w-52 h-52 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-purple-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-52 h-52 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-pink-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
           </>
         )}
 
-        <div className="flex justify-center items-center min-h-[75vh] px-4">
-        <div className={`w-full max-w-xl backdrop-blur-xl p-8 rounded-3xl border shadow-xl ${
+        <div className="flex justify-center items-center min-h-[75vh] px-2 sm:px-4">
+        <div className={`w-full max-w-xl backdrop-blur-xl p-5 sm:p-8 rounded-3xl border shadow-xl ${
           isLight
             ? "bg-white/60 border-pink-100 text-gray-800 shadow-xl shadow-pink-100/50"
             : "bg-white/5 border-white/10 text-white"
         }`}>
-          <h2 className={`text-4xl font-serif mb-6 text-center ${isLight ? "text-purple-700 drop-shadow-sm" : "text-yellow-400"}`}>
+          <h2 className={`text-3xl sm:text-4xl font-serif mb-6 text-center ${isLight ? "text-purple-700 drop-shadow-sm" : "text-yellow-400"}`}>
             ✍️ Make a Request
           </h2>
 

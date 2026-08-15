@@ -54,36 +54,47 @@ const Sidebar = ({ isOpen = false, onClose }: Props) => {
       )}
 
       <aside
-        className={`fixed top-0 left-0 bottom-0 z-20 transform transition-transform duration-300 md:relative md:translate-x-0 md:top-auto md:left-auto md:bottom-auto md:z-auto ${
+        className={`fixed top-0 left-0 bottom-0 z-30 transform transition-transform duration-300 md:relative md:translate-x-0 md:top-auto md:left-auto md:bottom-auto md:z-auto ${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } w-72 sidebar-mobile px-4 md:px-6 py-3 md:py-4 shadow-lg md:shadow-none border-b md:border-b-0 md:border-r ${
+        } w-[85vw] max-w-[320px] md:w-72 sidebar-mobile px-4 md:px-6 py-3 md:py-4 shadow-lg md:shadow-none border-b md:border-b-0 md:border-r ${
           isLight
             ? "bg-white/70 backdrop-blur-md border-pink-200"
             : "backdrop-blur-xl bg-white/5 border-white/10"
         }`}
       >
         <div className="flex flex-col gap-3 md:gap-4 md:items-start">
-          <Link to={decoded?.id ? `/profile/${decoded.id}` : "/dashboard"} className="shrink-0">
-            {profilePicture ? (
-              <img
-                src={`${assetsBaseUrl}${profilePicture}`}
-                alt="Profile logo"
-                className="h-12 w-12 rounded-full border border-yellow-500/70 object-cover shadow-md"
-              />
-            ) : (
-              <div
-                className={`h-12 w-12 rounded-full border border-yellow-500/70 shadow-md flex items-center justify-center font-semibold ${
-                  isLight ? "bg-pink-100 text-fuchsia-700" : "bg-gray-800 text-yellow-400"
-                }`}
-                title="Profile"
-              >
-                {(decoded?.username?.[0] || decoded?.email?.[0])?.toUpperCase() || "P"}
-              </div>
-            )}
-          </Link>
+          <div className="flex items-center justify-between w-full md:justify-start">
+            <Link to={decoded?.id ? `/profile/${decoded.id}` : "/dashboard"} className="shrink-0">
+              {profilePicture ? (
+                <img
+                  src={`${assetsBaseUrl}${profilePicture}`}
+                  alt="Profile logo"
+                  className="h-12 w-12 rounded-full border border-yellow-500/70 object-cover shadow-md"
+                />
+              ) : (
+                <div
+                  className={`h-12 w-12 rounded-full border border-yellow-500/70 shadow-md flex items-center justify-center font-semibold ${
+                    isLight ? "bg-pink-100 text-fuchsia-700" : "bg-gray-800 text-yellow-400"
+                  }`}
+                  title="Profile"
+                >
+                  {(decoded?.username?.[0] || decoded?.email?.[0])?.toUpperCase() || "P"}
+                </div>
+              )}
+            </Link>
 
-          <div className="flex flex-1 flex-wrap items-center gap-3 md:justify-end">
-            <nav className="flex gap-2 md:gap-3 overflow-x-auto whitespace-nowrap nav-stack">
+            <button
+              type="button"
+              onClick={() => onClose?.()}
+              className="md:hidden rounded-lg border px-2 py-1 text-lg leading-none hover:bg-black/5"
+              aria-label="Close sidebar"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div className="flex w-full flex-col gap-3 md:flex-row md:items-center md:justify-end md:gap-3">
+            <nav className="flex flex-col gap-2 md:flex-row md:gap-3 md:overflow-x-auto md:whitespace-nowrap nav-stack">
               <Link
                 to="/dashboard"
                 className={`block px-4 py-2 rounded-xl transition-all duration-300 ${

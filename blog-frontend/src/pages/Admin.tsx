@@ -21,12 +21,12 @@ const Admin = () => {
             <motion.div
               animate={{ scale: [1, 1.15, 1], x: [0, 20, 0] }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-0 left-0 w-96 h-96 bg-pink-300/40 rounded-full blur-[80px] -z-10 pointer-events-none"
+              className="absolute top-0 left-0 w-52 h-52 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-pink-300/40 rounded-full blur-[80px] -z-10 pointer-events-none"
             />
             <motion.div
               animate={{ scale: [1, 1.2, 1], x: [0, -20, 0] }}
               transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-              className="absolute bottom-0 right-0 w-96 h-96 bg-purple-300/40 rounded-full blur-[80px] -z-10 pointer-events-none"
+              className="absolute bottom-0 right-0 w-52 h-52 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-purple-300/40 rounded-full blur-[80px] -z-10 pointer-events-none"
             />
           </>
         )}
@@ -34,8 +34,8 @@ const Admin = () => {
         {/* Dark mode blobs */}
         {!isLight && (
           <>
-            <div className="absolute top-0 left-0 w-96 h-96 bg-purple-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
+            <div className="absolute top-0 left-0 w-52 h-52 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-purple-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-52 h-52 sm:w-72 sm:h-72 lg:w-96 lg:h-96 bg-pink-800/30 rounded-full blur-[100px] -z-10 pointer-events-none" />
           </>
         )}
 
