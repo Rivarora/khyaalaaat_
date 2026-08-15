@@ -279,7 +279,7 @@ const Dashboard = () => {
               <h2 className={`text-xl sm:text-2xl font-serif mb-4 sm:mb-6 break-words ${cardTitle}`}>{post.title}</h2>
               <p className={`whitespace-pre-line leading-7 sm:leading-8 text-sm sm:text-base flex-grow break-words ${cardText}`}>{post.content}</p>
 
-              <div className="flex justify-center gap-6 sm:gap-10 mt-6 text-sm">
+              <div className="flex flex-wrap justify-center gap-4 sm:gap-10 mt-6 text-sm">
                 <motion.button onClick={() => handleLike(post.id)} animate={animatedLike === post.id ? { scale: [1, 1.6, 1] } : {}} transition={{ duration: 0.4 }} className="text-pink-400 hover:text-pink-500">
                   ❤️ {post.likes_count}
                 </motion.button>
@@ -303,14 +303,14 @@ const Dashboard = () => {
                       <span className={cardText}>— {c.content}</span>
                     </div>
                   ))}
-                  <div className="flex gap-2 mt-3">
+                  <div className="flex flex-col sm:flex-row gap-2 mt-3">
                     <input
                       value={commentDrafts[post.id] || ""}
                       onChange={(e) => setCommentDrafts((prev) => ({ ...prev, [post.id]: e.target.value }))}
                       className={`flex-1 p-2 rounded ${commentInput}`}
                       placeholder="Leave a thought..."
                     />
-                    <button onClick={() => handleComment(post.id)} className={`px-3 rounded text-white ${isLight ? "bg-fuchsia-500 hover:bg-fuchsia-600" : "bg-purple-600 hover:bg-purple-700"}`}>Send</button>
+                    <button onClick={() => handleComment(post.id)} className={`px-3 py-2 sm:py-0 rounded text-white ${isLight ? "bg-fuchsia-500 hover:bg-fuchsia-600" : "bg-purple-600 hover:bg-purple-700"}`}>Send</button>
                   </div>
                 </div>
               )}

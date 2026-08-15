@@ -9,7 +9,7 @@ const Admin = () => {
 
   return (
     <Layout>
-      <div className={`relative min-h-full py-10 px-8 overflow-hidden transition-all duration-700 ${
+      <div className={`relative min-h-full py-10 px-4 sm:px-6 lg:px-8 overflow-hidden transition-all duration-700 ${
         isLight
           ? "bg-white/35 backdrop-blur-[1px]"
           : "bg-black/20"

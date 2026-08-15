@@ -104,14 +104,14 @@ export default function MyRequests() {
           return (
             <div
               key={requestId}
-            className={`rounded-2xl p-5 border shadow-lg ${
+            className={`rounded-2xl p-5 border shadow-lg break-words ${
               isLight
                 ? "bg-white/60 backdrop-blur-xl border-pink-100 shadow-xl shadow-pink-100/50 text-gray-800"
                 : "bg-white/5 backdrop-blur-xl border-white/10 text-white"
             }`}
           >
             <h3 className="text-xl font-medium">{r.mood ? `Mood: ${r.mood}` : "Poem Request"}</h3>
-            <p>Theme: {r.theme}</p>
+            <p className="break-words">Theme: {r.theme}</p>
             <p>
               Status:{" "}
               <span
@@ -131,7 +131,7 @@ export default function MyRequests() {
                 isLight ? "bg-pink-50/80 border-pink-100" : "bg-black/40 border-white/10"
               }`}>
                 <p className="font-medium mb-1">Admin Reply</p>
-                <p className="whitespace-pre-line">{r.reply_text}</p>
+                <p className="whitespace-pre-line break-words">{r.reply_text}</p>
                 {r.replied_at && (
                   <p className={`text-xs mt-2 ${isLight ? "text-gray-500" : "text-gray-400"}`}>
                     Replied: {new Date(r.replied_at).toLocaleString()}
@@ -143,7 +143,7 @@ export default function MyRequests() {
             )}
             <button
               onClick={() => handleDelete(requestId)}
-              className={`mt-4 px-4 py-2 rounded-lg text-white transition ${
+              className={`mt-4 w-full sm:w-auto px-4 py-2 rounded-lg text-white transition ${
                 isLight
                   ? "bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600"
                   : "bg-gradient-to-r from-violet-600 via-fuchsia-600 to-pink-600 hover:from-violet-700 hover:via-fuchsia-700 hover:to-pink-700"

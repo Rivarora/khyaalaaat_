@@ -75,15 +75,15 @@ export default function AdminReply() {
         isLight ? "bg-white/35 backdrop-blur-[1px]" : "bg-black/20"
       }`}>
         <div className="max-w-4xl mx-auto space-y-4">
-        <h1 className={`text-3xl font-bold ${isLight ? "text-fuchsia-700" : "text-yellow-300"}`}>Reply to Request</h1>
+        <h1 className={`text-2xl sm:text-3xl font-bold ${isLight ? "text-fuchsia-700" : "text-yellow-300"}`}>Reply to Request</h1>
 
         {request && (
-          <div className={`rounded-2xl p-5 border ${
+          <div className={`rounded-2xl p-5 border break-words ${
             isLight ? "bg-white/70 border-pink-200 text-gray-800" : "bg-white/10 border-white/20 text-white"
           }`}>
             <h2 className="text-xl font-medium">Request from {request.user_id?.username || "Unknown"}</h2>
             <p>Mood: {request.mood}</p>
-            <p>Theme: {request.theme}</p>
+            <p className="break-words">Theme: {request.theme}</p>
             <p>Status: {request.status}</p>
           </div>
         )}
@@ -100,14 +100,14 @@ export default function AdminReply() {
         <div className="flex flex-col sm:flex-row gap-3">
           <button
             onClick={onSubmit}
-            className="px-5 py-2 bg-purple-600 rounded hover:bg-purple-700"
+            className="w-full sm:w-auto px-5 py-2 bg-purple-600 rounded hover:bg-purple-700"
           >
             Save Reply
           </button>
           {request?.reply_text && (
             <button
               onClick={onDeleteReply}
-              className="px-5 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+              className="w-full sm:w-auto px-5 py-2 bg-red-600 text-white rounded hover:bg-red-700"
             >
               Delete Reply
             </button>

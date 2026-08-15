@@ -42,13 +42,17 @@ const Sidebar = ({ isOpen = false, onClose }: Props) => {
     };
   }, [decoded?.id]);
 
+  const handleClose = () => {
+    onClose?.();
+  };
+
   return (
     <>
       {/* backdrop for mobile when sidebar is open */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/40 z-10 md:hidden"
-          onClick={() => onClose?.()}
+          onClick={handleClose}
           aria-hidden
         />
       )}
@@ -64,7 +68,11 @@ const Sidebar = ({ isOpen = false, onClose }: Props) => {
       >
         <div className="flex flex-col gap-3 md:gap-4 md:items-start">
           <div className="flex items-center justify-between w-full md:justify-start">
-            <Link to={decoded?.id ? `/profile/${decoded.id}` : "/dashboard"} className="shrink-0">
+            <Link
+              to={decoded?.id ? `/profile/${decoded.id}` : "/dashboard"}
+              className="shrink-0"
+              onClick={handleClose}
+            >
               {profilePicture ? (
                 <img
                   src={`${assetsBaseUrl}${profilePicture}`}
@@ -85,7 +93,7 @@ const Sidebar = ({ isOpen = false, onClose }: Props) => {
 
             <button
               type="button"
-              onClick={() => onClose?.()}
+              onClick={handleClose}
               className="md:hidden rounded-lg border px-2 py-1 text-lg leading-none hover:bg-black/5"
               aria-label="Close sidebar"
             >
@@ -97,6 +105,7 @@ const Sidebar = ({ isOpen = false, onClose }: Props) => {
             <nav className="flex w-full flex-col gap-2 nav-stack">
               <Link
                 to="/dashboard"
+                onClick={handleClose}
                 className={`block px-4 py-2 rounded-xl transition-all duration-300 ${
                   isLight
                     ? "text-fuchsia-700 hover:bg-pink-200/60 hover:text-purple-800"
@@ -110,6 +119,7 @@ const Sidebar = ({ isOpen = false, onClose }: Props) => {
                 <>
                   <Link
                     to="/request-poem"
+                    onClick={handleClose}
                     className={`block px-4 py-2 rounded-xl transition-all duration-300 ${
                       isLight
                         ? "text-fuchsia-700 hover:bg-pink-200/60 hover:text-purple-800"
@@ -121,6 +131,7 @@ const Sidebar = ({ isOpen = false, onClose }: Props) => {
 
                   <Link
                     to="/my-requests"
+                    onClick={handleClose}
                     className={`block px-4 py-2 rounded-xl transition-all duration-300 ${
                       isLight
                         ? "text-fuchsia-700 hover:bg-pink-200/60 hover:text-purple-800"
@@ -136,6 +147,7 @@ const Sidebar = ({ isOpen = false, onClose }: Props) => {
                 <>
                   <Link
                     to="/admin"
+                    onClick={handleClose}
                     className={`block px-4 py-2 rounded-xl transition-all duration-300 ${
                       isLight
                         ? "text-fuchsia-700 hover:bg-pink-200/60 hover:text-purple-800"
@@ -146,6 +158,7 @@ const Sidebar = ({ isOpen = false, onClose }: Props) => {
                   </Link>
                   <Link
                     to="/admin-requests"
+                    onClick={handleClose}
                     className={`block px-4 py-2 rounded-xl transition-all duration-300 ${
                       isLight
                         ? "text-fuchsia-700 hover:bg-pink-200/60 hover:text-purple-800"
@@ -158,7 +171,7 @@ const Sidebar = ({ isOpen = false, onClose }: Props) => {
               )}
             </nav>
 
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <button
                 onClick={toggleTheme}
                 className={`px-4 py-2 rounded-xl border transition-colors duration-300 ${
@@ -171,7 +184,7 @@ const Sidebar = ({ isOpen = false, onClose }: Props) => {
                 {isLight ? "☀️" : "🌙"}
               </button>
 
-              <LogoutButton />
+              <LogoutButton onLogout={handleClose} />
             </div>
           </div>
         </div>
@@ -182,11 +195,17 @@ const Sidebar = ({ isOpen = false, onClose }: Props) => {
 
 export default Sidebar;
 
-function LogoutButton() {
+function LogoutButton({ onLogout }: { onLogout?: () => void }) {
   const { logout } = useAuth();
 
   return (
-    <button onClick={logout} className="bg-red-600 px-5 py-2 rounded-xl hover:bg-red-700 text-white">
+    <button
+      onClick={() => {
+        logout();
+        onLogout?.();
+      }}
+      className="bg-red-600 px-5 py-2 rounded-xl hover:bg-red-700 text-white"
+    >
       Logout
     </button>
   );

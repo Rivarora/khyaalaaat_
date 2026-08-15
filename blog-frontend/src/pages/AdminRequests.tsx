@@ -112,16 +112,16 @@ export default function AdminRequests() {
         {data.map((r) => (
           <div
             key={r.id}
-            className={`rounded-2xl p-5 border shadow-lg ${
+            className={`rounded-2xl p-5 border shadow-lg break-words ${
               isLight
                 ? "bg-white/60 backdrop-blur-xl border-pink-100 shadow-xl shadow-pink-100/50 text-gray-800"
                 : "bg-white/5 backdrop-blur-xl border-white/10 text-white"
             }`}
           >
-            <h3 className="text-xl font-medium">Request from {r.user_id?.username || "Unknown"}</h3>
+            <h3 className="text-xl font-medium break-words">Request from {r.user_id?.username || "Unknown"}</h3>
             <p>Mood: {r.mood}</p>
-            <p>Theme: {r.theme}</p>
-            <p>
+            <p className="break-words">Theme: {r.theme}</p>
+            <p className="break-all">
               By: {r.user_id?.username || "Unknown"} ({r.user_id?.email || "unknown@example.com"})
             </p>
             <p>
@@ -140,7 +140,7 @@ export default function AdminRequests() {
                 isLight ? "bg-pink-50/80 border-pink-100" : "bg-black/40 border-white/10"
               }`}>
                 <p className="font-medium">Current Reply</p>
-                <p className="whitespace-pre-line">{r.reply_text}</p>
+                <p className="whitespace-pre-line break-words">{r.reply_text}</p>
               </div>
             )}
 
@@ -159,7 +159,7 @@ export default function AdminRequests() {
             <div className="mt-3 flex flex-col sm:flex-row sm:flex-wrap gap-2">
               <button
                 onClick={() => respond(r.id)}
-                className={`px-4 py-2 rounded text-white ${
+                className={`w-full sm:w-auto px-4 py-2 rounded text-white ${
                   isLight
                     ? "bg-gradient-to-r from-fuchsia-500 to-pink-500 hover:from-fuchsia-600 hover:to-pink-600"
                     : "bg-gradient-to-r from-violet-600 via-fuchsia-600 to-pink-600 hover:from-violet-700 hover:via-fuchsia-700 hover:to-pink-700"
@@ -170,14 +170,14 @@ export default function AdminRequests() {
               {r.reply_text && (
                 <button
                   onClick={() => removeReply(r.id)}
-                  className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+                  className="w-full sm:w-auto px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
                 >
                   Delete Reply
                 </button>
               )}
               <Link
                 to={`/admin-requests/${r.id}/reply`}
-                className={`inline-flex items-center justify-center px-4 py-2 rounded ${
+                className={`inline-flex w-full sm:w-auto items-center justify-center px-4 py-2 rounded ${
                   isLight
                     ? "bg-purple-100 text-purple-700 hover:bg-purple-200"
                     : "bg-indigo-600 text-white hover:bg-indigo-700"
