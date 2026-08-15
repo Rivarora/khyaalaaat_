@@ -37,6 +37,53 @@
   padding: 2em;
 }
 
+/* Make images responsive by default */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Buttons and links should be easier to tap on small screens */
+@media (max-width: 640px) {
+  button,
+  .btn,
+  a {
+    min-height: 40px;
+  }
+
+  /* Make nav links and actions full width when stacked */
+  .nav-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  #root {
+    padding: 1rem;
+  }
+
+  .logo {
+    height: 3.5em;
+    padding: 0.75em;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+}
+
+/* Sidebar mobile sizing helper */
+@media (max-width: 768px) {
+  .sidebar-mobile {
+    width: 80vw;
+    max-width: 380px;
+  }
+}
+
 .read-the-docs {
   color: #888;
 }
