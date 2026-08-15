@@ -1,7 +1,5 @@
 import type { ReactNode } from "react";
-import { useState } from "react";
 import Sidebar from "./Sidebar";
-import Navbar from "./Navbar";
 import { useTheme } from "../context/ThemeContext";
 import GlowingParticles from "./GlowingParticles";
 
@@ -13,8 +11,6 @@ const Layout = ({ children }: Props) => {
   const { theme } = useTheme();
   const isLight = theme === "light";
 
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
-
   return (
     <div
       className={`relative min-h-screen transition-colors duration-500 ${
@@ -25,16 +21,12 @@ const Layout = ({ children }: Props) => {
     >
       <GlowingParticles />
 
-      <div className="relative z-10 flex flex-col md:flex-row">
-        <Sidebar isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)} />
+      <div className="relative z-10">
+        <Sidebar />
 
-        <div className="flex-1 flex flex-col min-w-0">
-          <Navbar onToggleSidebar={() => setSidebarOpen((s) => !s)} />
-
-          <main className="p-3 sm:p-4 md:p-8 flex-1 min-w-0 overflow-y-auto">
-            {children}
-          </main>
-        </div>
+        <main className="px-4 py-4 md:px-8 md:py-8 flex-1 min-w-0 overflow-y-auto">
+          {children}
+        </main>
       </div>
     </div>
   );
