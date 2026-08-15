@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 @keyframes gradient {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -8,4 +9,17 @@
 .animate-gradient {
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
+}
+
+@media (max-width: 768px) {
+  .sidebar-mobile {
+    width: min(80vw, 360px);
+  }
+}
+
+@media (max-width: 640px) {
+  .auth-card {
+    width: calc(100% - 1.5rem);
+    max-width: 420px;
+  }
 }

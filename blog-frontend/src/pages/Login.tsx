@@ -74,7 +74,7 @@ const Login = () => {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className={`relative z-10 overflow-hidden backdrop-blur-2xl p-9 rounded-[28px] shadow-2xl w-[420px] ${
+        className={`auth-card relative z-10 overflow-hidden backdrop-blur-2xl p-9 rounded-[28px] shadow-2xl w-full max-w-[420px] mx-4 md:mx-0 ${
           isLight
             ? "bg-white/75 border border-pink-200 text-gray-800 shadow-pink-200/70"
             : "bg-white/10 border border-violet-300/20 text-white shadow-fuchsia-900/30"
