@@ -31,7 +31,7 @@ const Layout = ({ children }: Props) => {
             <button
               type="button"
               onClick={() => setIsSidebarOpen(true)}
-              className={`fixed left-4 top-4 z-40 md:hidden rounded-lg border px-3 py-2 shadow-sm ${
+              className={`fixed right-4 top-4 z-40 md:hidden rounded-lg border px-3 py-2 shadow-sm ${
                 isLight
                   ? "bg-white/90 border-pink-200 text-fuchsia-700"
                   : "bg-black/70 border-white/20 text-yellow-300"
